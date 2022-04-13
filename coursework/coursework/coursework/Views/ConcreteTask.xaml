@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="coursework.Views.ConcreteTask"
+             Shell.PresentationMode="ModalAnimated">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="4*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Text="Name"></Label>
+            <Editor Grid.Row="0" Grid.Column="1" Placeholder="text me"></Editor>
+            <Label Grid.Row="1" Grid.Column="0" Text="Description"></Label>
+            <Editor Grid.Row="1" Grid.Column="1" Placeholder="text me"></Editor>
+            <Label Grid.Row="2" Grid.Column="0" Text="Executor"></Label>
+            <Editor Grid.Row="2" Grid.Column="1" Placeholder="text me"></Editor>
+            <Label Grid.Row="3" Grid.Column="0" Text="Reminder"></Label>
+            <Editor Grid.Row="3" Grid.Column="1" Placeholder="text me"></Editor>
+            <Label Grid.Row="4" Grid.Column="0" Text="to do list"></Label>
+            <StackLayout Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Orientation="Horizontal">
+                <CheckBox></CheckBox>
+                <Editor Text="12313131312"></Editor>
+            </StackLayout>
+            <StackLayout Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6" Orientation="Horizontal">
+                <Editor Text="12313131312"></Editor>
+                <Button Text="Add"></Button>
+            </StackLayout>
+
+            <StackLayout Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Orientation="Horizontal">
+                <Button Text="Cancel"></Button>
+                <Button Text="Save"></Button>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
