@@ -28,7 +28,7 @@ namespace StraightEdgeServer.Controllers
                 return BadRequest();
             var match = await db.Users
                 .Include(u => u.Tasks)
-                .FirstOrDefaultAsync(u => u.Id == user.Id);
+                .FirstOrDefaultAsync(u => u.Email == user.Email && u.Password == user.Password);
             if (match is null)
                 return NotFound();
             return Ok(match);

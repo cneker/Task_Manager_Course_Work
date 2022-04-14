@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore;
 
 namespace StraightEdgeServer
 {
@@ -16,11 +17,15 @@ namespace StraightEdgeServer
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        public static IWebHostBuilder CreateHostBuilder(string[] args) =>
+            //Host.CreateDefaultBuilder(args)
+            //    .ConfigureWebHostDefaults(webBuilder =>
+            //    {
+            //        webBuilder.UseStartup<Startup>();
+            //    });
+            WebHost.CreateDefaultBuilder(args)
+                .UseUrls("http://0.0.0.0:5000;https://0.0.0.0:5001")
+                .UseKestrel()
+                .UseStartup<Startup>();
     }
 }
