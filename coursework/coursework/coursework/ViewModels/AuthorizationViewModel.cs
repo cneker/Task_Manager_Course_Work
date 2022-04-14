@@ -14,11 +14,10 @@ namespace coursework.ViewModels
 {
     public class AuthorizationViewModel :INotifyPropertyChanged
     {
-        //private bool _initialized = false;
         private bool _isBusy;
         private User _currentUser;
 
-        private UserService _userService = new UserService();
+        private readonly UserService _userService = new UserService();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
