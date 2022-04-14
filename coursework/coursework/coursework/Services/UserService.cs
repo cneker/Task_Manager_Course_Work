@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace coursework.Services
 {
     public class UserService
     {
-        private readonly string _url = "http://localhost:18965/api/tasks";
+        private readonly string _url = "http://192.168.100.3:5000/api/users";
 
         private JsonSerializerOptions _options = new JsonSerializerOptions
         {
@@ -20,7 +21,11 @@ namespace coursework.Services
 
         private HttpClient GetClient()
         {
-            HttpClient client = GetClient();
+            var httpClientHandler = new HttpClientHandler();
+            httpClientHandler.ServerCertificateCustomValidationCallback =
+                (message, cert, chain, errors) => { return true; };
+            HttpClient client = new HttpClient(httpClientHandler);
+            
             client.DefaultRequestHeaders.Add("Accept", "application/json");
             return client;
         }
@@ -28,10 +33,9 @@ namespace coursework.Services
         public async Task<User> Get(User user)
         {
             HttpClient client = GetClient();
-            var response = await client.PostAsync(_url + "/get",
-                new StringContent(
-                    JsonSerializer.Serialize(user),
-                    Encoding.UTF8, "application/json"));
+            var json = JsonSerializer.Serialize(user);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(_url + "/get", content);
 
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;

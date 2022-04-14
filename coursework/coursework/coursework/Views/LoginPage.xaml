@@ -12,13 +12,13 @@
                 <Label Text="Login"></Label>
                 <StackLayout Orientation="Horizontal">
                     <Label Text="email"></Label>
-                    <Entry Placeholder="Text tour email"></Entry>
+                    <Entry Placeholder="Text tour email" Text="{Binding Path=CurrentUser.Email}"></Entry>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <Label Text="password"></Label>
-                    <Entry Placeholder="Text tour password" IsPassword="True"></Entry>
+                    <Entry Placeholder="Text tour password" IsPassword="True" Text="{Binding Path=CurrentUser.Password}"></Entry>
                 </StackLayout>
-                <Button VerticalOptions="Center" Text="Login"  Clicked="OnLoginClicked"/>
+                <Button VerticalOptions="Center" Text="Login" Command="{Binding Path = GetUserCommand}"/>
                 <Button VerticalOptions="Center" Text="Registration"  Clicked="OnRegistrationClicked"/>
             </StackLayout>
         </Grid>

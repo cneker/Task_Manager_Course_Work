@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using coursework.Models;
+using coursework.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,20 +13,18 @@ namespace coursework.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
+        public AuthorizationViewModel ViewModel;
+
         public LoginPage()
         {
             InitializeComponent();
-        }
-
-        private async void OnLoginClicked(object obj, EventArgs e)
-        {
-            // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
-            await Shell.Current.GoToAsync($"//{nameof(TasksPage)}");
+            ViewModel = new AuthorizationViewModel();
+            BindingContext = ViewModel;
         }
 
         private async void OnRegistrationClicked(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync($"//LoginPage/RegistrationPage");
+            await Shell.Current.GoToAsync("//LoginPage/RegistrationPage");
         }
     }
 }

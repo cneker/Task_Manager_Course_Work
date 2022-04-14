@@ -12,11 +12,10 @@ namespace coursework
         public AppShell()
         {
             InitializeComponent();
-            //Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
-            //Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
-            //Routing.RegisterRoute("//LoginPage//RegistrationPage", typeof(RegistrationPage));
-            //Routing.RegisterRoute("//TasksPage//Task", typeof(ConcreteTask));
+            Routing.RegisterRoute("//LoginPage//RegistrationPage", typeof(RegistrationPage));
             Routing.RegisterRoute(nameof(ConcreteTask), typeof(ConcreteTask));
+            if (true)
+                GoToAsync("//LoginPage");
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

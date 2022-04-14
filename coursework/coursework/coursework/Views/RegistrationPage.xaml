@@ -11,13 +11,13 @@
                 <Label Text="Registration"></Label>
                 <StackLayout Orientation="Horizontal">
                     <Label Text="email"></Label>
-                    <Entry Placeholder="Text tour email"></Entry>
+                    <Entry Placeholder="Text tour email" Text="{Binding Path=CurrentUser.Email}"></Entry>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <Label Text="password"></Label>
-                    <Entry Placeholder="Text tour password"></Entry>
+                    <Entry Placeholder="Text tour password" Text="{Binding Path=CurrentUser.Password}"></Entry>
                 </StackLayout>
-                <Button VerticalOptions="Center" Text="Register"/>
+                <Button VerticalOptions="Center" Text="Register" Command="{Binding Path=CreateUserCommand}"/>
             </StackLayout>
         </Grid>
     </ContentPage.Content>

@@ -1,4 +1,5 @@
 ﻿using System;
+using coursework.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,6 +10,11 @@ namespace coursework
         public App()
         {
             InitializeComponent();
+            //Routing.RegisterRoute(nameof(ConcreteTask), typeof(ConcreteTask));
+            //Routing.RegisterRoute(nameof(AppShell), typeof(AppShell));
+            ////Routing.RegisterRoute(nameof(ConcreteTask), typeof(ConcreteTask));
+            ////Routing.RegisterRoute(nameof(ConcreteTask), typeof(ConcreteTask));
+            ////Routing.RegisterRoute(nameof(ConcreteTask), typeof(ConcreteTask));
 
             MainPage = new AppShell();
         }
