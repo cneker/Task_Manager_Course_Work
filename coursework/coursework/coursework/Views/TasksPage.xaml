@@ -40,7 +40,9 @@
         </CollectionView>
     </RefreshView>-->
 
-
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddTaskCommand }" />
+    </ContentPage.ToolbarItems>
 
 
     <RefreshView>
@@ -79,100 +81,5 @@
         </CollectionView>
     </RefreshView>
 
-
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" Clicked="Button_OnClicked" />
-    </ContentPage.ToolbarItems>
-
-    <!--<ContentPage.Content>
-        <StackLayout>
-            <Entry Text="{Binding Path= CurrentUser.Id}"/>
-            <Label Text="Task1" 
-                   LineBreakMode="NoWrap"
-                   FontSize="16" />
-            <Label Text="Agreeable diverted remainder for warrant eat outweigh no lasted elinor. Apartments better written concern incommode their carried wise marry recurred sixteen mind tastes use savings voice is" 
-                   LineBreakMode="TailTruncation"
-                   MaxLines="2"
-                   FontSize="16" />
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Executor:" 
-                       LineBreakMode="NoWrap"
-                       FontSize="16" />
-                <Label Text="Voin Vostoka" 
-                       LineBreakMode="NoWrap"
-                       FontSize="16" />
-            </StackLayout>
-
-            <Label Text="Task1" 
-                   LineBreakMode="NoWrap"
-                   FontSize="16" />
-            <Label Text="Agreeable diverted remainder for warrant eat outweigh no lasted elinor. Apartments better written concern incommode their carried wise marry recurred sixteen mind tastes use savings voice is" 
-                   LineBreakMode="TailTruncation"
-                   MaxLines="2"
-                   FontSize="16" />
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Executor:" 
-                       LineBreakMode="NoWrap"
-                       FontSize="16" />
-                <Label Text="Voin Vostoka" 
-                       LineBreakMode="NoWrap"
-                       FontSize="16" />
-            </StackLayout>
-
-            <Label Text="Task1" 
-                   LineBreakMode="NoWrap"
-                   FontSize="16" />
-            <Label Text="Agreeable diverted remainder for warrant eat outweigh no lasted elinor. Apartments better written concern incommode their carried wise marry recurred sixteen mind tastes use savings voice is" 
-                   LineBreakMode="TailTruncation"
-                   MaxLines="2"
-                   FontSize="16" />
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Executor:" 
-                       LineBreakMode="NoWrap"
-                       FontSize="16" />
-                <Label Text="Voin Vostoka" 
-                       LineBreakMode="NoWrap"
-                       FontSize="16" />
-            </StackLayout>
-
-            --><!--<Button Text="Create task" Clicked="Button_OnClicked"/>--><!--
-        </StackLayout>
-    </ContentPage.Content>-->
-
-
-
-
-    <!--<ContentPage.Content>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="4*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Text="Name"></Label>
-            <Editor Grid.Row="0" Grid.Column="1" Placeholder="text me"></Editor>
-            <Label Grid.Row="1" Grid.Column="0" Text="Description"></Label>
-            <Editor Grid.Row="1" Grid.Column="1" Placeholder="text me"></Editor>
-            <Label Grid.Row="2" Grid.Column="0" Text="Executor"></Label>
-            <Editor Grid.Row="2" Grid.Column="1" Placeholder="text me"></Editor>
-            <Label Grid.Row="3" Grid.Column="0" Text="Reminder"></Label>
-            <Editor Grid.Row="3" Grid.Column="1" Placeholder="text me"></Editor>
-            <Label Grid.Row="4" Grid.Column="0" Text="to do list"></Label>
-
-            <StackLayout Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Orientation="Horizontal">
-                <CheckBox></CheckBox>
-                <Editor Text="12313131312"></Editor>
-            </StackLayout>
-
-
-        </Grid>
-    </ContentPage.Content>-->
 
 </ContentPage>

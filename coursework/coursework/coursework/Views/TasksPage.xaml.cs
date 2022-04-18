@@ -19,11 +19,5 @@ namespace coursework.Views
             InitializeComponent();
             BindingContext = ViewModel = new TasksViewModel();
         }
-
-        private async void Button_OnClicked(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync(nameof(ConcreteTask));
-
-        }
     }
 }

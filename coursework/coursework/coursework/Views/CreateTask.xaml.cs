@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace coursework.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ConcreteTask : ContentPage
+    public partial class CreateTask : ContentPage
     {
-        public ConcreteTask()
+        public CreateTask()
         {
             InitializeComponent();
         }
