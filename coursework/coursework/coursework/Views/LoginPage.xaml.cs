@@ -18,8 +18,7 @@ namespace coursework.Views
         public LoginPage()
         {
             InitializeComponent();
-            ViewModel = new AuthorizationViewModel();
-            BindingContext = ViewModel;
+            BindingContext = ViewModel = new AuthorizationViewModel();
         }
 
         private async void OnRegistrationClicked(object sender, EventArgs e)

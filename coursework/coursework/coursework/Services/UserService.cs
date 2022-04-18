@@ -30,12 +30,12 @@ namespace coursework.Services
             return client;
         }
 
-        public async Task<User> Get(User user)
+        public async Task<User> Log(User user)
         {
             HttpClient client = GetClient();
             var json = JsonSerializer.Serialize(user);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(_url + "/get", content);
+            var response = await client.PostAsync(_url + "/login", content);
 
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;
@@ -44,13 +44,27 @@ namespace coursework.Services
                 await response.Content.ReadAsStringAsync(), _options);
         }
 
-        public async Task<User> Add(User user)
+        public async Task<User> Reg(User user)
         {
             HttpClient client = GetClient();
-            var response = await client.PostAsync(_url + "/create",
+            var response = await client.PostAsync(_url + "/registration",
                 new StringContent(
                     JsonSerializer.Serialize(user),
                     Encoding.UTF8, "application/json"));
+
+            if (response.StatusCode != HttpStatusCode.OK)
+                return null;
+
+            return JsonSerializer.Deserialize<User>(
+                await response.Content.ReadAsStringAsync(), _options);
+        }
+
+        public async Task<User> Get(int id)
+        {
+            HttpClient client = GetClient();
+            var json = JsonSerializer.Serialize(id);
+            //var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.GetAsync(_url + "/get?" + $"id={id}");
 
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;

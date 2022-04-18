@@ -43,23 +43,33 @@
 
 
 
-    <!--<RefreshView>
-        <CollectionView>
+    <RefreshView>
+        <CollectionView ItemsSource="{Binding Tasks}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout>
-                        <Label Text="Task1" 
-                               LineBreakMode="NoWrap"
-                               FontSize="16" />
-                        <Label Text="Agreeable diverted remainder for warrant eat outweigh no lasted elinor. Apartments better written concern incommode their carried wise marry recurred sixteen mind tastes use savings voice is" 
-                               LineBreakMode="TailTruncation"
-                               MaxLines="2"
-                               FontSize="16" />
                         <StackLayout Orientation="Horizontal">
-                            <Label Text="Executor:" 
+                            <Label Text="Name: " 
                                    LineBreakMode="NoWrap"
                                    FontSize="16" />
-                            <Label Text="Voin Vostoka" 
+                            <Label Text="{Binding Name}" 
+                                   LineBreakMode="NoWrap"
+                                   FontSize="16" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Description: " 
+                                   LineBreakMode="NoWrap"
+                                   FontSize="16" />
+                            <Label Text="{Binding Description}" 
+                                   LineBreakMode="TailTruncation"
+                                   MaxLines="2"
+                                   FontSize="16" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Executor: " 
+                                   LineBreakMode="NoWrap"
+                                   FontSize="16" />
+                            <Label Text="{Binding Executor}" 
                                    LineBreakMode="NoWrap"
                                    FontSize="16" />
                         </StackLayout>
@@ -67,18 +77,16 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </RefreshView>-->
+    </RefreshView>
 
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Clicked="Button_OnClicked" />
     </ContentPage.ToolbarItems>
 
-    <ContentPage.Content>
-
-        
-
+    <!--<ContentPage.Content>
         <StackLayout>
+            <Entry Text="{Binding Path= CurrentUser.Id}"/>
             <Label Text="Task1" 
                    LineBreakMode="NoWrap"
                    FontSize="16" />
@@ -127,9 +135,9 @@
                        FontSize="16" />
             </StackLayout>
 
-            <!--<Button Text="Create task" Clicked="Button_OnClicked"/>-->
+            --><!--<Button Text="Create task" Clicked="Button_OnClicked"/>--><!--
         </StackLayout>
-    </ContentPage.Content>
+    </ContentPage.Content>-->
 
 
 
