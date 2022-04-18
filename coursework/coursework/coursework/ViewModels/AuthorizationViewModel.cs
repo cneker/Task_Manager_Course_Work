@@ -12,14 +12,12 @@ using Xamarin.Forms;
 
 namespace coursework.ViewModels
 {
-    public class AuthorizationViewModel :INotifyPropertyChanged
+    public class AuthorizationViewModel : BaseViewModel
     {
         private bool _isBusy;
         private User _currentUser;
 
         private readonly UserService _userService = new UserService();
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public ICommand CreateUserCommand { protected set; get; }
         public ICommand GetUserCommand { protected set; get; }
@@ -58,24 +56,17 @@ namespace coursework.ViewModels
         public async void CreateUser()
         {
             IsBusy = true;
-            var user = await _userService.Add(_currentUser);
+            var user = await _userService.Reg(_currentUser);
             if (user != null)
-                await Shell.Current.GoToAsync($"//{nameof(TasksPage)}");
+                await Shell.Current.GoToAsync($"//{nameof(TasksPage)}?Id={user.Id.ToString()}");
         }
 
         public async void GetUser()
         {
             IsBusy = true;
-            var user = await _userService.Get(_currentUser);
+            var user = await _userService.Log(_currentUser);
             if (user != null)
-                await Shell.Current.GoToAsync($"//{nameof(TasksPage)}");
-        }
-
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                await Shell.Current.GoToAsync($"//{nameof(TasksPage)}?Id={user.Id.ToString()}");
         }
     }
 }
