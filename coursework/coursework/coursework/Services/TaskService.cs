@@ -33,7 +33,7 @@ namespace coursework.Services
 
         public async Task<Task> Get(int id)
         {
-            HttpClient client = GetClient();
+            using HttpClient client = GetClient();
             var json = JsonSerializer.Serialize(id);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await client.PostAsync(_url + "/get", content);
@@ -47,7 +47,7 @@ namespace coursework.Services
 
         public async Task<Task> Add(Task task)
         {
-            HttpClient client = GetClient();
+            using HttpClient client = GetClient();
             var response = await client.PostAsync(_url + "/create",
                 new StringContent(
                     JsonSerializer.Serialize(task),
@@ -62,7 +62,7 @@ namespace coursework.Services
 
         public async Task<Task> Update(Task task)
         {
-            HttpClient client = GetClient();
+            using HttpClient client = GetClient();
             var response = await client.PostAsync(_url + "/update",
                 new StringContent(
                     JsonSerializer.Serialize(task),
@@ -77,7 +77,7 @@ namespace coursework.Services
         //may be remove return Task value
         public async Task<Task> Delete(int id)
         {
-            HttpClient client = GetClient();
+            using HttpClient client = GetClient();
             var response = await client.PostAsync(_url + "/delete",
                 new StringContent(
                     JsonSerializer.Serialize(id),

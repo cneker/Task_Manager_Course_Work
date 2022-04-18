@@ -32,7 +32,7 @@ namespace coursework.Services
 
         public async Task<User> Log(User user)
         {
-            HttpClient client = GetClient();
+            using HttpClient client = GetClient();
             var json = JsonSerializer.Serialize(user);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await client.PostAsync(_url + "/login", content);
@@ -46,7 +46,7 @@ namespace coursework.Services
 
         public async Task<User> Reg(User user)
         {
-            HttpClient client = GetClient();
+            using HttpClient client = GetClient();
             var response = await client.PostAsync(_url + "/registration",
                 new StringContent(
                     JsonSerializer.Serialize(user),
@@ -61,7 +61,7 @@ namespace coursework.Services
 
         public async Task<User> Get(int id)
         {
-            HttpClient client = GetClient();
+            using HttpClient client = GetClient();
             var json = JsonSerializer.Serialize(id);
             //var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await client.GetAsync(_url + "/get?" + $"id={id}");

@@ -66,7 +66,10 @@ namespace coursework.ViewModels
             IsBusy = true;
             var user = await _userService.Log(_currentUser);
             if (user != null)
-                await Shell.Current.GoToAsync($"//{nameof(TasksPage)}?Id={user.Id.ToString()}");
+            {
+                UserSingleton.GetInstance(user);
+                await Shell.Current.GoToAsync($"//{nameof(TasksPage)}");
+            }
         }
     }
 }
