@@ -19,10 +19,10 @@ namespace StraightEdgeServer.Controllers
             db = context;
         }
 
-        //api/users/get
-        [Route("get")]
+        //api/users/login
+        [Route("login")]
         [HttpPost]
-        public async Task<ActionResult<User>> Get(User user)
+        public async Task<ActionResult<User>> Log(User user)
         {
             if (user is null)
                 return BadRequest();
@@ -34,10 +34,10 @@ namespace StraightEdgeServer.Controllers
             return Ok(match);
         }
 
-        //api/users/create
-        [Route("create")]
+        //api/users/registration
+        [Route("registration")]
         [HttpPost]
-        public async Task<ActionResult<User>> Post(User user)
+        public async Task<ActionResult<User>> Reg(User user)
         {
             if (user is null)
                 return BadRequest();
@@ -49,6 +49,21 @@ namespace StraightEdgeServer.Controllers
             await db.AddAsync(user);
             await db.SaveChangesAsync();
             return Ok(user);
+        }
+
+        //api/users/get
+        [Route("get")]
+        [HttpGet]
+        public async Task<ActionResult<User>> Get(int id)
+        {
+            if (id == 0)
+                return BadRequest();
+            var match = await db.Users
+                .Include(u => u.Tasks)
+                .FirstOrDefaultAsync(u => u.Id == id);
+            if (match is null)
+                return NotFound();
+            return Ok(match);
         }
     }
 }

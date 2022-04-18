@@ -29,8 +29,6 @@ namespace StraightEdgeServer
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
 
             services.AddControllers();
-
-            //services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

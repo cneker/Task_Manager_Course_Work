@@ -60,6 +60,7 @@ namespace StraightEdgeServer.Controllers
             return Ok(task);
         }
 
+        //may be remove return Task value
         //api/tasks/delete
         [Route("delete")]
         [HttpDelete]
