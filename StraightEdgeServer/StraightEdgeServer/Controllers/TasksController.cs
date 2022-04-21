@@ -26,9 +26,9 @@ namespace StraightEdgeServer.Controllers
         [HttpGet]
         public async Task<ActionResult<Task>> Get(int id)
         {
-            var task = db.Tasks
+            var task = await db.Tasks
                 .Include(t => t.ToDoList)
-                .FirstOrDefault(t => t.Id == id);
+                .FirstOrDefaultAsync(t => t.Id == id);
             if (task is null)
                 return NotFound();
             return Ok(task);
@@ -72,6 +72,14 @@ namespace StraightEdgeServer.Controllers
             db.Tasks.Remove(task);
             await db.SaveChangesAsync();
             return Ok(task);
+        }
+
+        [Route("user_tasks")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Task>>> GetTasks(int id)
+        {
+            var tasks = await db.Tasks.Where(t => t.UserId == id).ToListAsync();
+            return Ok(tasks);
         }
     }
 }
