@@ -12,8 +12,14 @@ namespace coursework
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute("//LoginPage//RegistrationPage", typeof(RegistrationPage));
-            Routing.RegisterRoute(nameof(ConcreteTask), typeof(ConcreteTask));
+            Routing.RegisterRoute("//LoginPage/RegistrationPage", typeof(RegistrationPage));
+            Routing.RegisterRoute("//TasksPage/CreateTask", typeof(CreateTask));
+            Routing.RegisterRoute("//TasksPage/Test", typeof(Test));
+            //Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+            //Routing.RegisterRoute(nameof(TasksPage), typeof(TasksPage));
+            //Routing.RegisterRoute(nameof(AccountPage), typeof(AccountPage));
+
+            //Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
             if (true)
                 GoToAsync("//LoginPage");
         }
