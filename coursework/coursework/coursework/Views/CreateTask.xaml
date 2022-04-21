@@ -4,44 +4,48 @@
              x:Class="coursework.Views.CreateTask"
              Shell.PresentationMode="ModalAnimated">
     <ContentPage.Content>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="4*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
+        <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Name"></Label>
+                <Editor Text="{Binding ConcreteTask.Name}" Placeholder="text me"></Editor>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Description"></Label>
+                <Editor Text="{Binding ConcreteTask.Description}" Placeholder="text me"></Editor>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Executor"></Label>
+                <Editor Text="{Binding ConcreteTask.Executor}" Placeholder="text me"></Editor>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Reminder"></Label>
+                <Editor Text="{Binding ConcreteTask.DeadLine}" Placeholder="text me"></Editor>
+            </StackLayout>
+            <Label Text="to do list"></Label>
+            <RefreshView>
+                <CollectionView x:Name="View" ItemsSource="{Binding ToDo}" 
+                                SelectionMode="Single" SelectedItem="{Binding SelectedItem}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding IsCompleted}"></CheckBox>
+                                <Editor Text="{Binding Name}"></Editor>
+                                <!--<Button 
+                                    Text="Delete" 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:CreateTaskViewModel}}, Path=DeleteToDoCommand}">
+                                </Button>-->
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
 
-            </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Text="Name"></Label>
-            <Editor Grid.Row="0" Grid.Column="1" Placeholder="text me"></Editor>
-            <Label Grid.Row="1" Grid.Column="0" Text="Description"></Label>
-            <Editor Grid.Row="1" Grid.Column="1" Placeholder="text me"></Editor>
-            <Label Grid.Row="2" Grid.Column="0" Text="Executor"></Label>
-            <Editor Grid.Row="2" Grid.Column="1" Placeholder="text me"></Editor>
-            <Label Grid.Row="3" Grid.Column="0" Text="Reminder"></Label>
-            <Editor Grid.Row="3" Grid.Column="1" Placeholder="text me"></Editor>
-            <Label Grid.Row="4" Grid.Column="0" Text="to do list"></Label>
-            <StackLayout Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Orientation="Horizontal">
-                <CheckBox></CheckBox>
-                <Editor Text="12313131312"></Editor>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Cancel" Command="{Binding BackCommand}"></Button>
+                <Button Text="Save" Command="{Binding CreateTaskCommand}"></Button>
+                <Button Text="Add Item" Command="{Binding CreateToDoItemCommand}"></Button>
+                <Button Text="Delete Item" Command="{Binding DeleteToDoCommand}"></Button>
             </StackLayout>
-            <StackLayout Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6" Orientation="Horizontal">
-                <Editor Text="12313131312"></Editor>
-                <Button Text="Add"></Button>
-            </StackLayout>
-
-            <StackLayout Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Orientation="Horizontal">
-                <Button Text="Cancel"></Button>
-                <Button Text="Save"></Button>
-            </StackLayout>
-        </Grid>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
