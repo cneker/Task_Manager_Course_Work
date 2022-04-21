@@ -98,23 +98,5 @@ namespace coursework.ViewModels
             await Shell.Current.GoToAsync("..");
 
 
-        #region view concrete task
-
-        //public void ApplyQueryAttributes(IDictionary<string, string> query)
-        //{
-        //    var id = int.Parse(HttpUtility.UrlDecode(query["Id"]));
-        //}
-
-        //private async void GetTask(int id)
-        //{
-        //    var task = await _taskService.Get(id);
-        //    if (task != null)
-        //    {
-        //        ConcreteTask = task;
-        //    }
-        //}
-
-        #endregion
-
     }
 }

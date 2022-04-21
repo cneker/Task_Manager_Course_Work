@@ -6,6 +6,7 @@ using System.Web;
 using System.Windows.Input;
 using coursework.Models;
 using coursework.Services;
+using coursework.Views;
 using Xamarin.Forms;
 
 namespace coursework.ViewModels
@@ -16,7 +17,10 @@ namespace coursework.ViewModels
         private ObservableCollection<Task> _tasks;
         private readonly UserService _userService;
 
-        public ICommand LoadTasksItemsCommand { get; set; }
+        //for refresh items in refreshview (may be put away)
+        //public ICommand LoadTasksItemsCommand { get; set; }
+        public ICommand AddTaskCommand { get; set; }
+        public Command<Task> ItemTappedCommand { get; set; }
 
         public User CurrentUser
         {
@@ -43,15 +47,25 @@ namespace coursework.ViewModels
             _userService = new UserService();
             CurrentUser = UserSingleton.GetInstance().GetUser();
             Tasks = LoadTasks();
+
+            AddTaskCommand = new Command(OnAddTask);
+            ItemTappedCommand = new Command<Task>(OnItemTapped);
             //LoadTasksItemsCommand = new Command(LoadTasks1);
         }
 
-        //public void LoadTasks1()
-        //{
-        //    Tasks = LoadTasks();
-        //}
+        public async void OnAddTask() =>
+            await Shell.Current.GoToAsync(nameof(CreateTask));
 
         private ObservableCollection<Task> LoadTasks() =>
             CurrentUser.Tasks != null ? new ObservableCollection<Task>(CurrentUser.Tasks) : new ObservableCollection<Task>();
+
+        public void OnAppearing()
+        {
+            CurrentUser = UserSingleton.GetInstance().GetUser();
+            Tasks = LoadTasks();
+        }
+
+        private async void OnItemTapped(Task task) =>
+            await Shell.Current.GoToAsync($"{nameof(TaskInfo)}?Id={task.Id}");
     }
 }

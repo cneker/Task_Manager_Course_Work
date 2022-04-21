@@ -34,9 +34,7 @@ namespace coursework.Services
         public async Task<Models.Task> Get(int id)
         {
             using HttpClient client = GetClient();
-            var json = JsonSerializer.Serialize(id);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(_url + "/get", content);
+            var response = await client.GetAsync(_url + $"/get?Id={id}");
 
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;
@@ -62,7 +60,7 @@ namespace coursework.Services
         public async Task<Models.Task> Update(Models.Task task)
         {
             using HttpClient client = GetClient();
-            var response = await client.PostAsync(_url + "/update",
+            var response = await client.PutAsync(_url + "/update",
                 new StringContent(
                     JsonSerializer.Serialize(task),
                     Encoding.UTF8, "application/json"));
@@ -76,16 +74,29 @@ namespace coursework.Services
         //may be remove return Task value
         public async Task<Models.Task> Delete(int id)
         {
-            using HttpClient client = GetClient();
-            var response = await client.PostAsync(_url + "/delete",
-                new StringContent(
-                    JsonSerializer.Serialize(id),
-                    Encoding.UTF8, "application/json"));
+            //using HttpClient client = GetClient();
+            //var response = await client.DeleteAsync(_url + "/delete",
+            //    new StringContent(
+            //        JsonSerializer.Serialize(id),
+            //        Encoding.UTF8, "application/json"));
+
+            //if (response.StatusCode != HttpStatusCode.OK)
+            //    return null;
+
+            //return JsonSerializer.Deserialize<Models.Task>(
+            //    await response.Content.ReadAsStringAsync(), _options);
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Models.Task>> GetAllUserTasks(int id)
+        {
+            var client = GetClient();
+            var response = await client.GetAsync(_url + $"/user_tasks?Id={id}");
 
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;
 
-            return JsonSerializer.Deserialize<Models.Task>(
+            return JsonSerializer.Deserialize<IEnumerable<Models.Task>>(
                 await response.Content.ReadAsStringAsync(), _options);
         }
     }
