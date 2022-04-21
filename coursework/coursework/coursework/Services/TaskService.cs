@@ -31,7 +31,7 @@ namespace coursework.Services
             return client;
         }
 
-        public async Task<Task> Get(int id)
+        public async Task<Models.Task> Get(int id)
         {
             using HttpClient client = GetClient();
             var json = JsonSerializer.Serialize(id);
@@ -41,26 +41,25 @@ namespace coursework.Services
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;
 
-            return JsonSerializer.Deserialize<Task>(
+            return JsonSerializer.Deserialize<Models.Task>(
                 await response.Content.ReadAsStringAsync(), _options);
         }
 
-        public async Task<Task> Add(Task task)
+        public async Task<Models.Task> Add(Models.Task task)
         {
             using HttpClient client = GetClient();
-            var response = await client.PostAsync(_url + "/create",
-                new StringContent(
-                    JsonSerializer.Serialize(task),
-                    Encoding.UTF8, "application/json"));
+            var json = JsonSerializer.Serialize(task);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(_url + "/create", content);
 
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;
 
-            return JsonSerializer.Deserialize<Task>(
+            return JsonSerializer.Deserialize<Models.Task>(
                 await response.Content.ReadAsStringAsync(), _options);
         }
 
-        public async Task<Task> Update(Task task)
+        public async Task<Models.Task> Update(Models.Task task)
         {
             using HttpClient client = GetClient();
             var response = await client.PostAsync(_url + "/update",
@@ -71,11 +70,11 @@ namespace coursework.Services
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;
 
-            return JsonSerializer.Deserialize<Task>(
+            return JsonSerializer.Deserialize<Models.Task>(
                 await response.Content.ReadAsStringAsync(), _options);
         }
         //may be remove return Task value
-        public async Task<Task> Delete(int id)
+        public async Task<Models.Task> Delete(int id)
         {
             using HttpClient client = GetClient();
             var response = await client.PostAsync(_url + "/delete",
@@ -86,7 +85,7 @@ namespace coursework.Services
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;
 
-            return JsonSerializer.Deserialize<Task>(
+            return JsonSerializer.Deserialize<Models.Task>(
                 await response.Content.ReadAsStringAsync(), _options);
         }
     }

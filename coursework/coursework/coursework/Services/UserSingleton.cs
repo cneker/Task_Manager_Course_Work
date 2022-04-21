@@ -18,7 +18,7 @@ namespace coursework.Services
 
         public static UserSingleton GetInstance(User user = null)
         {
-            if (_instance == null && user != null)
+            if (user != null)
             {
                 _instance = new UserSingleton(user);
             }
@@ -30,5 +30,6 @@ namespace coursework.Services
         {
             return _user;
         }
+
     }
 }
