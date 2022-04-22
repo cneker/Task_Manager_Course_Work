@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using StraightEdgeServer.Models;
 using Task = StraightEdgeServer.Models.Task;
 
@@ -30,6 +31,17 @@ namespace StraightEdgeServer.Controllers
             return Ok(todo);
         }
 
-
+        //api/todo/delete
+        [Route("delete")]
+        [HttpDelete]
+        public async Task<ActionResult<ToDoList>> Delete(int id)
+        {
+            var toDo = await db.ToDoLists.FirstAsync(t => t.Id == id);
+            if (toDo == null)
+                return NotFound();
+            db.ToDoLists.Remove(toDo);
+            await db.SaveChangesAsync();
+            return Ok(toDo);
+        }
     }
 }

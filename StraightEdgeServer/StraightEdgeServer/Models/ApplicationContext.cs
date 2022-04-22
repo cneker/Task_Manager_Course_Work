@@ -9,8 +9,6 @@ namespace StraightEdgeServer.Models
         public DbSet<ToDoList> ToDoLists { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
-        {
-            Database.EnsureCreated();
-        }
+        { }
     }
 }

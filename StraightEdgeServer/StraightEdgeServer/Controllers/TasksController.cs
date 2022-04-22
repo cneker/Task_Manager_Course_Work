@@ -43,6 +43,9 @@ namespace StraightEdgeServer.Controllers
                 return BadRequest();
             await db.Tasks.AddAsync(task);
             await db.SaveChangesAsync();
+
+            task = await db.Tasks.FirstOrDefaultAsync(t => t.Id == task.Id);
+
             return Ok(task);
         }
 
@@ -53,10 +56,12 @@ namespace StraightEdgeServer.Controllers
         {
             if (task is null)
                 return BadRequest();
-            if (!await db.Tasks.AnyAsync(t => t.Id == task.Id))
-                return NotFound();
+            //var source = await db.Tasks.Include(t => t.ToDoList).FirstAsync(t => t.Id == task.Id);
+
             db.Tasks.Update(task);
             await db.SaveChangesAsync();
+
+
             return Ok(task);
         }
 

@@ -43,12 +43,16 @@ namespace StraightEdgeServer.Controllers
                 return BadRequest();
             var match = await db.Users
                 .Include(u => u.Tasks)
-                .FirstOrDefaultAsync(u => u.Id == user.Id);
-            if (match is not null)
+                .FirstOrDefaultAsync(u => u.Email == user.Email);
+            if (match != null)
                 return BadRequest();
             await db.AddAsync(user);
             await db.SaveChangesAsync();
-            return Ok(user);
+
+            match = await db.Users
+                .Include(u => u.Tasks)
+                .FirstOrDefaultAsync(u => u.Email == user.Email);
+            return Ok(match);
         }
 
         //api/users/get

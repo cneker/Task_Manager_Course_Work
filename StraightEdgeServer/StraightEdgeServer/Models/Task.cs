@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StraightEdgeServer.Models
 {
@@ -10,8 +14,10 @@ namespace StraightEdgeServer.Models
         //late make ExecutorId and User object as Executor
         public string Executor { get; set; }
         //late change type to DateAndTime 
-        public string DeadLine { get; set; }
-        public bool IsCompleted { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime DeadLine { get; set; }
+        [DefaultValue("null")]
+        public bool? IsCompleted { get; set; }
 
         public int UserId { get; set; }
         //public User User { get; set; }
