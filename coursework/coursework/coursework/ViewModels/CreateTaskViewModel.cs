@@ -16,12 +16,12 @@ namespace coursework.ViewModels
         private Task _concreteTask;
         private ObservableCollection<ToDoList> _toDo;
         private readonly TaskService _taskService;
-        private ToDoList _selectedItem;
 
         public ICommand CreateTaskCommand { get; set; }
         public ICommand CreateToDoItemCommand { get; set; }
         public ICommand BackCommand { get; set; }
-        public ICommand DeleteToDoCommand { get; set; }
+        public Command<ToDoList> DeleteToDoCommand { get; set; }
+        public DateTime MinDate { get; }
 
 
         public Task ConcreteTask
@@ -44,20 +44,13 @@ namespace coursework.ViewModels
             }
         }
 
-        public ToDoList SelectedItem
-        {
-            get => _selectedItem;
-            set
-            {
-                _selectedItem = value;
-                OnPropertyChanged();
-            }
-        }
-
         public CreateTaskViewModel()
         {
             _taskService = new TaskService();
-            ConcreteTask = new Task() {UserId = UserSingleton.GetInstance().GetUser().Id};
+            MinDate = DateTime.Now.Date;
+
+            ConcreteTask = new Task()
+                { UserId = UserSingleton.GetInstance().GetUser().Id, DeadLine = DateTime.Now.Date };
             ConcreteTask.ToDoList = new List<ToDoList>();
 
             ToDo = new ObservableCollection<ToDoList>();
@@ -65,33 +58,29 @@ namespace coursework.ViewModels
             CreateTaskCommand = new Command(OnCreatingTask);
             CreateToDoItemCommand = new Command(OnCreatingToDoItem);
             BackCommand = new Command(Back);
-            DeleteToDoCommand = new Command(OnDeletingToDoItem);
+            DeleteToDoCommand = new Command<ToDoList>(OnDeletingToDoItem);
         }
 
         private async void OnCreatingTask()
         {
-            ConcreteTask.ToDoList.AddRange(TakeToDoWithOutTheLastElement());
+            ConcreteTask.ToDoList.AddRange(ToDo);
             var response = await _taskService.Add(ConcreteTask);
             if (response != null)
             {
                 var user = UserSingleton.GetInstance().GetUser();
-                user.Tasks.Add(ConcreteTask);
+                user.Tasks.Add(response);
                 Back();
             }
         }
-
-        private IEnumerable<ToDoList> TakeToDoWithOutTheLastElement() =>
-            ToDo.Take(ToDo.Count);
 
         private void OnCreatingToDoItem()
         {
             ToDo.Add(new ToDoList() { TaskId = ConcreteTask.Id, IsCompleted = false });
         }
 
-        private void OnDeletingToDoItem()
+        private void OnDeletingToDoItem(ToDoList toDo)
         {
-            ToDo.Remove(SelectedItem);
-            SelectedItem = null;
+            ToDo.Remove(toDo);
         }
 
         private async void Back() =>

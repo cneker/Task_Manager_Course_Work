@@ -14,6 +14,7 @@ namespace coursework.Services
         private UserSingleton(User user)
         {
             _user = user;
+
         }
 
         public static UserSingleton GetInstance(User user = null)

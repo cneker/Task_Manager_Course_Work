@@ -16,13 +16,14 @@ namespace coursework.ViewModels
         private Task _concreteTask;
         private ObservableCollection<ToDoList> _toDo;
         private readonly TaskService _taskService;
-        private readonly UserService _userService;
-        private ToDoList _selectedItem;
+        private readonly ToDoService _toDoService;
 
         public ICommand UpdateTaskCommand { get; set; }
         public ICommand CreateToDoItemCommand { get; set; }
         public ICommand BackCommand { get; set; }
-        public ICommand DeleteToDoCommand { get; set; }
+        public Command<ToDoList> DeleteToDoCommand { get; set; }
+
+        public DateTime MinDate { get; }
 
 
         public Task ConcreteTask
@@ -45,36 +46,36 @@ namespace coursework.ViewModels
             }
         }
 
-        public ToDoList SelectedItem
-        {
-            get => _selectedItem;
-            set
-            {
-                _selectedItem = value;
-                OnPropertyChanged();
-            }
-        }
-
         public TaskInfoViewModel()
         {
             _taskService = new TaskService();
-            _userService = new UserService();
+            _toDoService = new ToDoService();
+            MinDate = DateTime.Now.Date;
 
             ToDo = new ObservableCollection<ToDoList>();
 
             UpdateTaskCommand = new Command(OnUpdatingTask);
             CreateToDoItemCommand = new Command(OnCreatingToDoItem);
             BackCommand = new Command(Back);
-            DeleteToDoCommand = new Command(OnDeletingToDoItem);
+            DeleteToDoCommand = new Command<ToDoList>(OnDeletingToDoItem);
         }
 
         private async void OnUpdatingTask()
         {
+            var toDoForDelete = ConcreteTask.ToDoList
+                .Except(ToDo)
+                .Where(t => t.Id != 0)
+                .ToList();
             ConcreteTask.ToDoList.Clear();
             ConcreteTask.ToDoList.AddRange(ToDo);
             var response = await _taskService.Update(ConcreteTask);
             if (response != null)
             {
+                foreach (var toDo in toDoForDelete)
+                {
+                    await _toDoService.Delete(toDo.Id);
+                }
+
                 var tasks = await _taskService.GetAllUserTasks(ConcreteTask.UserId);
                 UserSingleton.GetInstance().GetUser().Tasks = tasks.ToList();
                 Back();
@@ -86,10 +87,9 @@ namespace coursework.ViewModels
             ToDo.Add(new ToDoList() { TaskId = ConcreteTask.Id, IsCompleted = false });
         }
 
-        private void OnDeletingToDoItem()
+        private void OnDeletingToDoItem(ToDoList toDo)
         {
-            ToDo.Remove(SelectedItem);
-            SelectedItem = null;
+            ToDo.Remove(toDo);
         }
 
         private async void Back() =>

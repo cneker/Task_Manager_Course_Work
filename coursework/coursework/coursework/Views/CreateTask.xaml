@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:coursework.ViewModels;assembly=coursework"
+             xmlns:model="clr-namespace:coursework.Models;assembly=coursework"
              x:Class="coursework.Views.CreateTask"
              Shell.PresentationMode="ModalAnimated">
     <ContentPage.Content>
@@ -19,21 +21,23 @@
             </StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Label Text="Reminder"></Label>
-                <Editor Text="{Binding ConcreteTask.DeadLine}" Placeholder="text me"></Editor>
+                <DatePicker Format="D" 
+                            Date="{Binding ConcreteTask.DeadLine}"
+                            MinimumDate="{Binding MinDate}"/>
             </StackLayout>
             <Label Text="to do list"></Label>
             <RefreshView>
                 <CollectionView x:Name="View" ItemsSource="{Binding ToDo}" 
-                                SelectionMode="Single" SelectedItem="{Binding SelectedItem}">
+                                SelectionMode="None">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Orientation="Horizontal">
                                 <CheckBox IsChecked="{Binding IsCompleted}"></CheckBox>
                                 <Editor Text="{Binding Name}"></Editor>
-                                <!--<Button 
-                                    Text="Delete" 
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:CreateTaskViewModel}}, Path=DeleteToDoCommand}">
-                                </Button>-->
+                                <Button 
+                                    Text="Delete Item" 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:CreateTaskViewModel}}, Path = DeleteToDoCommand}"
+                                    CommandParameter="{Binding Source={RelativeSource AncestorType={x:Type model:ToDoList}}, Path= . }"></Button>
                             </StackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
@@ -44,7 +48,6 @@
                 <Button Text="Cancel" Command="{Binding BackCommand}"></Button>
                 <Button Text="Save" Command="{Binding CreateTaskCommand}"></Button>
                 <Button Text="Add Item" Command="{Binding CreateToDoItemCommand}"></Button>
-                <Button Text="Delete Item" Command="{Binding DeleteToDoCommand}"></Button>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
