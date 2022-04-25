@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Web;
 using System.Windows.Input;
@@ -15,7 +16,7 @@ namespace coursework.ViewModels
     {
         private User _currentUser;
         private ObservableCollection<Task> _tasks;
-        private readonly UserService _userService;
+        private TaskService _taskService;
 
         //for refresh items in refreshview (may be put away)
         //public ICommand LoadTasksItemsCommand { get; set; }
@@ -42,11 +43,11 @@ namespace coursework.ViewModels
             }
         }
 
+        public string CompletedToDoItems { get; set; }
+
         public TasksViewModel()
         {
-            _userService = new UserService();
-            CurrentUser = UserSingleton.GetInstance().GetUser();
-            Tasks = LoadTasks();
+            _taskService = new TaskService();
 
             AddTaskCommand = new Command(OnAddTask);
             ItemTappedCommand = new Command<Task>(OnItemTapped);
@@ -59,13 +60,33 @@ namespace coursework.ViewModels
         private ObservableCollection<Task> LoadTasks() =>
             CurrentUser.Tasks != null ? new ObservableCollection<Task>(CurrentUser.Tasks) : new ObservableCollection<Task>();
 
-        public void OnAppearing()
+        public async void OnAppearing()
         {
             CurrentUser = UserSingleton.GetInstance().GetUser();
+            CurrentUser.Tasks = (await _taskService.GetAllUserTasks(CurrentUser.Id)).ToList();
             Tasks = LoadTasks();
-        }
 
+            foreach (var task in Tasks)
+            {
+                task.CountOfCompletedToDo = task.ToDoList.Count(t => t.IsCompleted);
+            }
+            //DeadLineIsComing(Tasks.ToList());
+        }
         private async void OnItemTapped(Task task) =>
             await Shell.Current.GoToAsync($"{nameof(TaskInfo)}?Id={task.Id}");
+
+        //add in server
+        private async void DeadLineIsComing(List<Task> tasks)
+        {
+            foreach (var task in tasks)
+            {
+                
+                if (DateTime.Compare(task.DeadLine.Date, DateTime.Now.Date) < 0 && task.IsCompleted == null)
+                {
+                    task.IsCompleted = false;
+                    await _taskService.Update(task);
+                }
+            }
+        }
     }
 }

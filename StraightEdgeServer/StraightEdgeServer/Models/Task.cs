@@ -22,6 +22,6 @@ namespace StraightEdgeServer.Models
         public int UserId { get; set; }
         //public User User { get; set; }
 
-        public List<ToDoList> ToDoList { get; set; }
+        public List<ToDo> ToDoList { get; set; }
     }
 }

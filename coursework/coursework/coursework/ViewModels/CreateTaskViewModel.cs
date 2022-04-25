@@ -14,13 +14,13 @@ namespace coursework.ViewModels
     public class CreateTaskViewModel : BaseViewModel
     {
         private Task _concreteTask;
-        private ObservableCollection<ToDoList> _toDo;
+        private ObservableCollection<ToDo> _toDo;
         private readonly TaskService _taskService;
 
         public ICommand CreateTaskCommand { get; set; }
         public ICommand CreateToDoItemCommand { get; set; }
         public ICommand BackCommand { get; set; }
-        public Command<ToDoList> DeleteToDoCommand { get; set; }
+        public Command<ToDo> DeleteToDoCommand { get; set; }
         public DateTime MinDate { get; }
 
 
@@ -34,7 +34,7 @@ namespace coursework.ViewModels
             }
         }
 
-        public ObservableCollection<ToDoList> ToDo
+        public ObservableCollection<ToDo> ToDo
         {
             get => _toDo;
             set
@@ -51,14 +51,14 @@ namespace coursework.ViewModels
 
             ConcreteTask = new Task()
                 { UserId = UserSingleton.GetInstance().GetUser().Id, DeadLine = DateTime.Now.Date };
-            ConcreteTask.ToDoList = new List<ToDoList>();
+            ConcreteTask.ToDoList = new List<ToDo>();
 
-            ToDo = new ObservableCollection<ToDoList>();
+            ToDo = new ObservableCollection<ToDo>();
 
             CreateTaskCommand = new Command(OnCreatingTask);
             CreateToDoItemCommand = new Command(OnCreatingToDoItem);
             BackCommand = new Command(Back);
-            DeleteToDoCommand = new Command<ToDoList>(OnDeletingToDoItem);
+            DeleteToDoCommand = new Command<ToDo>(OnDeletingToDoItem);
         }
 
         private async void OnCreatingTask()
@@ -75,10 +75,10 @@ namespace coursework.ViewModels
 
         private void OnCreatingToDoItem()
         {
-            ToDo.Add(new ToDoList() { TaskId = ConcreteTask.Id, IsCompleted = false });
+            ToDo.Add(new ToDo() { TaskId = ConcreteTask.Id, IsCompleted = false });
         }
 
-        private void OnDeletingToDoItem(ToDoList toDo)
+        private void OnDeletingToDoItem(ToDo toDo)
         {
             ToDo.Remove(toDo);
         }

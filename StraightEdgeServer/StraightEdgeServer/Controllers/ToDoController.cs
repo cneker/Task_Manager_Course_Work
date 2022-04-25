@@ -21,7 +21,7 @@ namespace StraightEdgeServer.Controllers
         //api/todo/create
         [Route("create")]
         [HttpPost]
-        public async Task<ActionResult<ToDoList>> Post(ToDoList todo)
+        public async Task<ActionResult<ToDo>> Post(ToDo todo)
         {
             if (todo is null)
                 return BadRequest();
@@ -34,7 +34,7 @@ namespace StraightEdgeServer.Controllers
         //api/todo/delete
         [Route("delete")]
         [HttpDelete]
-        public async Task<ActionResult<ToDoList>> Delete(int id)
+        public async Task<ActionResult<ToDo>> Delete(int id)
         {
             var toDo = await db.ToDoLists.FirstAsync(t => t.Id == id);
             if (toDo == null)

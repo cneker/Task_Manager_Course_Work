@@ -36,7 +36,7 @@
                                 <Button 
                                     Text="Delete Item" 
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskInfoViewModel}}, Path = DeleteToDoCommand}"
-                                    CommandParameter="{Binding Source={RelativeSource AncestorType={x:Type model:ToDoList}}, Path= . }"></Button>
+                                    CommandParameter="{Binding Source={RelativeSource AncestorType={x:Type model:ToDo}}, Path= . }"></Button>
                             </StackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
@@ -46,6 +46,7 @@
             <StackLayout Orientation="Horizontal">
                 <Button Text="Cancel" Command="{Binding BackCommand}"></Button>
                 <Button Text="Save" Command="{Binding UpdateTaskCommand}"></Button>
+                <Button Text="Delete Task" Command="{Binding DeleteTaskCommand}"></Button>
                 <Button Text="Add Item" Command="{Binding CreateToDoItemCommand}"></Button>
             </StackLayout>
         </StackLayout>

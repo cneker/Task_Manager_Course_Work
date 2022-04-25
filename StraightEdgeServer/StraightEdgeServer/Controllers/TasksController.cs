@@ -83,7 +83,10 @@ namespace StraightEdgeServer.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Task>>> GetTasks(int id)
         {
-            var tasks = await db.Tasks.Where(t => t.UserId == id).ToListAsync();
+            var tasks = await db.Tasks
+                .Include(t => t.ToDoList)
+                .Where(t => t.UserId == id)
+                .ToListAsync();
             return Ok(tasks);
         }
     }

@@ -12,11 +12,13 @@ namespace coursework.Models
         //late make ExecutorId and User object as Executor
         public string Executor { get; set; }
         public DateTime DeadLine { get; set; }
-        public bool IsCompleted { get; set; }
+        public bool? IsCompleted { get; set; }
 
         public int UserId { get; set; }
         //public User User { get; set; }
 
-        public List<ToDoList> ToDoList { get; set; }
+        public List<ToDo> ToDoList { get; set; }
+
+        public int CountOfCompletedToDo { get; set; }
     }
 }

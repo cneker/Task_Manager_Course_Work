@@ -29,7 +29,7 @@ namespace coursework.Services
             return client;
         }
 
-        public async Task<Models.ToDoList> Delete(int id)
+        public async Task<Models.ToDo> Delete(int id)
         {
             using HttpClient client = GetClient();
             var response = await client.DeleteAsync(_url + $"/delete?Id={id}");
@@ -37,11 +37,11 @@ namespace coursework.Services
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;
 
-            return JsonSerializer.Deserialize<Models.ToDoList>(
+            return JsonSerializer.Deserialize<Models.ToDo>(
                 await response.Content.ReadAsStringAsync(), _options);
         }
 
-        public async Task<Models.ToDoList> Add(ToDoList toDo)
+        public async Task<Models.ToDo> Add(ToDo toDo)
         {
             using HttpClient client = GetClient();
             var json = JsonSerializer.Serialize(toDo);
@@ -51,7 +51,7 @@ namespace coursework.Services
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;
 
-            return JsonSerializer.Deserialize<Models.ToDoList>(
+            return JsonSerializer.Deserialize<Models.ToDo>(
                 await response.Content.ReadAsStringAsync(), _options);
         }
     }

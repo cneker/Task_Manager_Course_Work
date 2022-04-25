@@ -4,7 +4,7 @@ using System.Text;
 
 namespace coursework.Models
 {
-    public class ToDoList
+    public class ToDo
     {
         public int Id { get; set; }
         public string Name { get; set; }

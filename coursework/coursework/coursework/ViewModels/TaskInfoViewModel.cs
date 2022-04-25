@@ -14,14 +14,15 @@ namespace coursework.ViewModels
     public class TaskInfoViewModel : BaseViewModel, IQueryAttributable
     {
         private Task _concreteTask;
-        private ObservableCollection<ToDoList> _toDo;
+        private ObservableCollection<ToDo> _toDo;
         private readonly TaskService _taskService;
         private readonly ToDoService _toDoService;
 
         public ICommand UpdateTaskCommand { get; set; }
         public ICommand CreateToDoItemCommand { get; set; }
         public ICommand BackCommand { get; set; }
-        public Command<ToDoList> DeleteToDoCommand { get; set; }
+        public ICommand DeleteTaskCommand { get; set; }
+        public Command<ToDo> DeleteToDoCommand { get; set; }
 
         public DateTime MinDate { get; }
 
@@ -36,7 +37,7 @@ namespace coursework.ViewModels
             }
         }
 
-        public ObservableCollection<ToDoList> ToDo
+        public ObservableCollection<ToDo> ToDo
         {
             get => _toDo;
             set
@@ -52,12 +53,13 @@ namespace coursework.ViewModels
             _toDoService = new ToDoService();
             MinDate = DateTime.Now.Date;
 
-            ToDo = new ObservableCollection<ToDoList>();
+            ToDo = new ObservableCollection<ToDo>();
 
             UpdateTaskCommand = new Command(OnUpdatingTask);
             CreateToDoItemCommand = new Command(OnCreatingToDoItem);
             BackCommand = new Command(Back);
-            DeleteToDoCommand = new Command<ToDoList>(OnDeletingToDoItem);
+            DeleteTaskCommand = new Command(OnDeletingTask);
+            DeleteToDoCommand = new Command<ToDo>(OnDeletingToDoItem);
         }
 
         private async void OnUpdatingTask()
@@ -84,16 +86,29 @@ namespace coursework.ViewModels
 
         private void OnCreatingToDoItem()
         {
-            ToDo.Add(new ToDoList() { TaskId = ConcreteTask.Id, IsCompleted = false });
+            ToDo.Add(new ToDo() { TaskId = ConcreteTask.Id, IsCompleted = false });
         }
 
-        private void OnDeletingToDoItem(ToDoList toDo)
+        private void OnDeletingToDoItem(ToDo toDo)
         {
             ToDo.Remove(toDo);
         }
 
         private async void Back() =>
             await Shell.Current.GoToAsync("..");
+
+        public async void OnDeletingTask()
+        {
+            var response = await _taskService.Delete(ConcreteTask.Id);
+            if (response != null)
+            {
+                var onDeleting =
+                    UserSingleton.GetInstance().GetUser().Tasks.First(t => t.Id == ConcreteTask.Id);
+                UserSingleton.GetInstance().GetUser().Tasks.Remove(onDeleting);
+                
+                Back();
+            }
+        }
 
         public void ApplyQueryAttributes(IDictionary<string, string> query)
         {
@@ -108,7 +123,7 @@ namespace coursework.ViewModels
             InitToDo(ConcreteTask.ToDoList);
         }
 
-        private void InitToDo(IEnumerable<ToDoList> value)
+        private void InitToDo(IEnumerable<ToDo> value)
         {
             foreach (var toDoList in value)
             {

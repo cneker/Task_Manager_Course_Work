@@ -14,7 +14,7 @@
         <CollectionView ItemsSource="{Binding Tasks}" SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout>
+                    <StackLayout x:Name="qwe">
                         <StackLayout Orientation="Horizontal">
                             <Label Text="Name: " 
                                    LineBreakMode="NoWrap"
@@ -39,6 +39,19 @@
                             <Label Text="{Binding Executor}" 
                                    LineBreakMode="NoWrap"
                                    FontSize="16" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Completed: " 
+                                   LineBreakMode="NoWrap"
+                                   FontSize="16" />
+                            <Label LineBreakMode="NoWrap" FontSize="16" >
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}{0} / {1}">
+                                        <Binding Path="CountOfCompletedToDo"/>
+                                        <Binding Path ="ToDoList.Count"/>
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
                         </StackLayout>
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer

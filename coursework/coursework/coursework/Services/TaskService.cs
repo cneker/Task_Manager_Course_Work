@@ -74,18 +74,14 @@ namespace coursework.Services
         //may be remove return Task value
         public async Task<Models.Task> Delete(int id)
         {
-            //using HttpClient client = GetClient();
-            //var response = await client.DeleteAsync(_url + "/delete",
-            //    new StringContent(
-            //        JsonSerializer.Serialize(id),
-            //        Encoding.UTF8, "application/json"));
+            using HttpClient client = GetClient();
+            var response = await client.DeleteAsync(_url + $"/delete?Id={id}");
 
-            //if (response.StatusCode != HttpStatusCode.OK)
-            //    return null;
+            if (response.StatusCode != HttpStatusCode.OK)
+                return null;
 
-            //return JsonSerializer.Deserialize<Models.Task>(
-            //    await response.Content.ReadAsStringAsync(), _options);
-            throw new NotImplementedException();
+            return JsonSerializer.Deserialize<Models.Task>(
+                await response.Content.ReadAsStringAsync(), _options);
         }
 
         public async Task<IEnumerable<Models.Task>> GetAllUserTasks(int id)
