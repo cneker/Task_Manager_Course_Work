@@ -9,44 +9,31 @@
         <ToolbarItem Text="Add" Command="{Binding AddTaskCommand }" />
     </ContentPage.ToolbarItems>
 
-
     <RefreshView>
         <CollectionView ItemsSource="{Binding Tasks}" SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout x:Name="qwe">
+                    <StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <Label Text="Name: " 
-                                   LineBreakMode="NoWrap"
-                                   FontSize="16" />
-                            <Label Text="{Binding Name}" 
+                            <Label Text="{Binding Path = Name, StringFormat = 'Name: {0}'}" 
                                    LineBreakMode="NoWrap"
                                    FontSize="16" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <Label Text="Description: " 
-                                   LineBreakMode="NoWrap"
-                                   FontSize="16" />
-                            <Label Text="{Binding Description}" 
+                            <Label Text="{Binding Path = Description, StringFormat='Description: {0}'}" 
                                    LineBreakMode="TailTruncation"
                                    MaxLines="2"
                                    FontSize="16" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <Label Text="Executor: " 
-                                   LineBreakMode="NoWrap"
-                                   FontSize="16" />
-                            <Label Text="{Binding Executor}" 
+                            <Label Text="{Binding Path = Executor, StringFormat='Executor: {0}'}"
                                    LineBreakMode="NoWrap"
                                    FontSize="16" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <Label Text="Completed: " 
-                                   LineBreakMode="NoWrap"
-                                   FontSize="16" />
                             <Label LineBreakMode="NoWrap" FontSize="16" >
                                 <Label.Text>
-                                    <MultiBinding StringFormat="{}{0} / {1}">
+                                    <MultiBinding StringFormat="Completed: {0} / {1}">
                                         <Binding Path="CountOfCompletedToDo"/>
                                         <Binding Path ="ToDoList.Count"/>
                                     </MultiBinding>
@@ -61,11 +48,9 @@
                             </TapGestureRecognizer>
                         </StackLayout.GestureRecognizers>
                     </StackLayout>
-
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
     </RefreshView>
-
 
 </ContentPage>

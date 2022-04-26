@@ -14,7 +14,6 @@ namespace coursework.ViewModels
 {
     public class AuthorizationViewModel : BaseViewModel
     {
-        private bool _isBusy;
         private User _currentUser;
 
         private readonly UserService _userService = new UserService();
@@ -22,23 +21,9 @@ namespace coursework.ViewModels
         public ICommand CreateUserCommand { protected set; get; }
         public ICommand GetUserCommand { protected set; get; }
 
-        public bool IsBusy
-        {
-            get => _isBusy;
-            set
-            {
-                _isBusy = value;
-                //OnPropertyChanged(nameof(IsBusy));
-                //OnPropertyChanged(nameof(IsLoaded));
-            }
-        }
-
-        public bool IsLoaded => !_isBusy;
-
         public AuthorizationViewModel()
         {
             _currentUser = new User();
-            IsBusy = false;
             CreateUserCommand = new Command(CreateUser);
             GetUserCommand = new Command(GetUser);
         }
@@ -55,7 +40,6 @@ namespace coursework.ViewModels
 
         public async void CreateUser()
         {
-            IsBusy = true;
             var user = await _userService.Reg(_currentUser);
             if (user != null)
             {
@@ -66,7 +50,6 @@ namespace coursework.ViewModels
 
         public async void GetUser()
         {
-            IsBusy = true;
             var user = await _userService.Log(_currentUser);
             if (user != null)
             {
