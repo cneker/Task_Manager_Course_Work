@@ -10,8 +10,8 @@ using StraightEdgeServer.Models;
 namespace StraightEdgeServer.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220422164808_DateTypeTask")]
-    partial class DateTypeTask
+    [Migration("20220427185748_added_notification")]
+    partial class added_notification
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,26 +34,29 @@ namespace StraightEdgeServer.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Executor")
+                    b.Property<string>("ExecutorEmail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsCompleted")
+                    b.Property<bool?>("IsCompleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<bool>("NotificationEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserEmail")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserEmail");
 
                     b.ToTable("Tasks");
                 });
 
-            modelBuilder.Entity("StraightEdgeServer.Models.ToDoList", b =>
+            modelBuilder.Entity("StraightEdgeServer.Models.ToDo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,18 +81,13 @@ namespace StraightEdgeServer.Migrations
 
             modelBuilder.Entity("StraightEdgeServer.Models.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Email");
 
                     b.ToTable("Users");
                 });
@@ -98,12 +96,10 @@ namespace StraightEdgeServer.Migrations
                 {
                     b.HasOne("StraightEdgeServer.Models.User", null)
                         .WithMany("Tasks")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserEmail");
                 });
 
-            modelBuilder.Entity("StraightEdgeServer.Models.ToDoList", b =>
+            modelBuilder.Entity("StraightEdgeServer.Models.ToDo", b =>
                 {
                     b.HasOne("StraightEdgeServer.Models.Task", null)
                         .WithMany("ToDoList")
