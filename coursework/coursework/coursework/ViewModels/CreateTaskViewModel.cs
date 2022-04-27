@@ -50,7 +50,7 @@ namespace coursework.ViewModels
             MinDate = DateTime.Now.Date;
 
             ConcreteTask = new Task()
-                { UserId = UserSingleton.GetInstance().GetUser().Id, DeadLine = DateTime.Now.Date };
+                { UserEmail = UserSingleton.GetInstance().GetUser().Email, DeadLine = DateTime.Now.Date };
             ConcreteTask.ToDoList = new List<ToDo>();
 
             ToDo = new ObservableCollection<ToDo>();
@@ -85,7 +85,5 @@ namespace coursework.ViewModels
 
         private async void Back() =>
             await Shell.Current.GoToAsync("..");
-
-
     }
 }

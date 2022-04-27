@@ -17,7 +17,7 @@
             </StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Label Text="Executor"></Label>
-                <Editor Text="{Binding ConcreteTask.Executor}" Placeholder="text me"></Editor>
+                <Editor Text="{Binding ConcreteTask.ExecutorEmail}" Placeholder="text me"></Editor>
             </StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Label Text="Reminder"></Label>

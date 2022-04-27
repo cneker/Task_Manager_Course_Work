@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -17,6 +18,7 @@ namespace coursework.ViewModels
         private User _currentUser;
         private ObservableCollection<Task> _tasks;
         private TaskService _taskService;
+        private UserService _userService;
 
         //for refresh items in refreshview (may be put away)
         //public ICommand LoadTasksItemsCommand { get; set; }
@@ -48,6 +50,7 @@ namespace coursework.ViewModels
         public TasksViewModel()
         {
             _taskService = new TaskService();
+            _userService = new UserService();
 
             AddTaskCommand = new Command(OnAddTask);
             ItemTappedCommand = new Command<Task>(OnItemTapped);
@@ -63,14 +66,20 @@ namespace coursework.ViewModels
         public async void OnAppearing()
         {
             CurrentUser = UserSingleton.GetInstance().GetUser();
-            CurrentUser.Tasks = (await _taskService.GetAllUserTasks(CurrentUser.Id)).ToList();
+            CurrentUser.Tasks = (await _taskService.GetAllUserTasks(CurrentUser.Email)).ToList();
             Tasks = LoadTasks();
 
             foreach (var task in Tasks)
             {
                 task.CountOfCompletedToDo = task.ToDoList.Count(t => t.IsCompleted);
+                if (task.UserEmail != CurrentUser.Email)
+                {
+                    task.TaskOwner = $"{task.UserEmail} task";
+                    OnPropertyChanged(nameof(Tasks));
+                }
+                else
+                    task.TaskOwner = "Your task";
             }
-            //DeadLineIsComing(Tasks.ToList());
         }
         private async void OnItemTapped(Task task) =>
             await Shell.Current.GoToAsync($"{nameof(TaskInfo)}?Id={task.Id}");
@@ -88,5 +97,6 @@ namespace coursework.ViewModels
                 }
             }
         }
+
     }
 }

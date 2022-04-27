@@ -14,7 +14,9 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout>
-                        <StackLayout Orientation="Horizontal">
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="{Binding TaskOwner}"
+                                   FontSize="16"/>
                             <Label Text="{Binding Path = Name, StringFormat = 'Name: {0}'}" 
                                    LineBreakMode="NoWrap"
                                    FontSize="16" />
@@ -26,7 +28,7 @@
                                    FontSize="16" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding Path = Executor, StringFormat='Executor: {0}'}"
+                            <Label Text="{Binding Path = ExecutorEmail, StringFormat='Executor: {0}'}"
                                    LineBreakMode="NoWrap"
                                    FontSize="16" />
                         </StackLayout>

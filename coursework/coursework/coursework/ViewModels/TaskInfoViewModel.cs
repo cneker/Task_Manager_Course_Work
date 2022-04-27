@@ -78,7 +78,7 @@ namespace coursework.ViewModels
                     await _toDoService.Delete(toDo.Id);
                 }
 
-                var tasks = await _taskService.GetAllUserTasks(ConcreteTask.UserId);
+                var tasks = await _taskService.GetAllUserTasks(ConcreteTask.UserEmail);
                 UserSingleton.GetInstance().GetUser().Tasks = tasks.ToList();
                 Back();
             }

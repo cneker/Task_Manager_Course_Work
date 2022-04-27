@@ -84,10 +84,10 @@ namespace coursework.Services
                 await response.Content.ReadAsStringAsync(), _options);
         }
 
-        public async Task<IEnumerable<Models.Task>> GetAllUserTasks(int id)
+        public async Task<IEnumerable<Models.Task>> GetAllUserTasks(string email)
         {
             var client = GetClient();
-            var response = await client.GetAsync(_url + $"/user_tasks?Id={id}");
+            var response = await client.GetAsync(_url + $"/user_tasks?Email={email}");
 
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;
