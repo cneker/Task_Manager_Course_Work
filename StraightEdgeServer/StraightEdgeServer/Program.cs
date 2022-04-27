@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace StraightEdgeServer
 {
@@ -18,14 +19,13 @@ namespace StraightEdgeServer
         }
 
         public static IWebHostBuilder CreateHostBuilder(string[] args) =>
-            //Host.CreateDefaultBuilder(args)
-            //    .ConfigureWebHostDefaults(webBuilder =>
-            //    {
-            //        webBuilder.UseStartup<Startup>();
-            //    });
             WebHost.CreateDefaultBuilder(args)
                 .UseUrls("http://0.0.0.0:5000;https://0.0.0.0:5001")
                 .UseKestrel()
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .ConfigureServices(services =>
+                {
+                    services.AddHostedService<EmailService>();
+                });
     }
 }

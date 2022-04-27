@@ -12,14 +12,17 @@ namespace StraightEdgeServer.Models
         public string Name { get; set; }
         public string Description { get; set; }
         //late make ExecutorId and User object as Executor
-        public string Executor { get; set; }
+        public string ExecutorEmail { get; set; }
         //late change type to DateAndTime 
         [Column(TypeName = "date")]
         public DateTime DeadLine { get; set; }
         [DefaultValue("null")]
         public bool? IsCompleted { get; set; }
+        public bool NotificationEnabled { get; set; }
 
-        public int UserId { get; set; }
+
+        [ForeignKey("Email")]
+        public string UserEmail { get; set; }
         //public User User { get; set; }
 
         public List<ToDo> ToDoList { get; set; }

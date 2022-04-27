@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace StraightEdgeServer.Models
 {
     public class User
     {
-        public int Id { get; set; }
+        [Key]
         public string Email { get; set; }
         public string Password { get; set; }
 

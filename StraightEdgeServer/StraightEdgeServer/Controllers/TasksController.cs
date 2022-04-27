@@ -81,11 +81,12 @@ namespace StraightEdgeServer.Controllers
 
         [Route("user_tasks")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Task>>> GetTasks(int id)
+        public async Task<ActionResult<IEnumerable<Task>>> GetTasks(string email)
         {
+            var user = await db.Users.FirstOrDefaultAsync(u => u.Email == email);
             var tasks = await db.Tasks
                 .Include(t => t.ToDoList)
-                .Where(t => t.UserId == id)
+                .Where(t => t.UserEmail == user.Email || t.ExecutorEmail == user.Email)
                 .ToListAsync();
             return Ok(tasks);
         }

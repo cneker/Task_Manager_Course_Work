@@ -58,13 +58,13 @@ namespace StraightEdgeServer.Controllers
         //api/users/get
         [Route("get")]
         [HttpGet]
-        public async Task<ActionResult<User>> Get(int id)
+        public async Task<ActionResult<User>> Get(string email)
         {
-            if (id == 0)
+            if (email == string.Empty)
                 return BadRequest();
             var match = await db.Users
                 .Include(u => u.Tasks)
-                .FirstOrDefaultAsync(u => u.Id == id);
+                .FirstOrDefaultAsync(u => u.Email == email);
             if (match is null)
                 return NotFound();
             return Ok(match);

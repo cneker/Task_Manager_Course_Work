@@ -29,6 +29,7 @@ namespace StraightEdgeServer
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
 
             services.AddControllers();
+            services.AddHostedService<EmailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,7 +44,6 @@ namespace StraightEdgeServer
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                //endpoints.MapRazorPages();
             });
         }
     }
