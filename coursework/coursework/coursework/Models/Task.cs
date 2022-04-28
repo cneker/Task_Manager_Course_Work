@@ -13,6 +13,7 @@ namespace coursework.Models
         public string ExecutorEmail { get; set; }
         public DateTime DeadLine { get; set; }
         public bool? IsCompleted { get; set; }
+        public bool NotificationEnabled { get; set; }
 
         public string UserEmail { get; set; }
         //public User User { get; set; }

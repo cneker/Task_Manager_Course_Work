@@ -26,6 +26,11 @@ namespace coursework.ViewModels
 
         public DateTime MinDate { get; }
 
+        public bool IsUpdateButtonEnabled { get; set; } = true;
+        public bool IsCreateToDoButtonEnabled { get; set; } = true;
+        public bool IsUpdateInformationEnabled { get; set; } = true;
+
+
 
         public Task ConcreteTask
         {
@@ -51,7 +56,7 @@ namespace coursework.ViewModels
         {
             _taskService = new TaskService();
             _toDoService = new ToDoService();
-            MinDate = DateTime.Now.Date;
+            MinDate = DateTime.Now.Date.Subtract(TimeSpan.FromDays(365));
 
             ToDo = new ObservableCollection<ToDo>();
 
@@ -120,6 +125,17 @@ namespace coursework.ViewModels
         {
             var task = await _taskService.Get(id);
             ConcreteTask = task;
+
+            if (ConcreteTask.DeadLine.Date < DateTime.Now.Date)
+            {
+                IsUpdateButtonEnabled = false;
+                IsCreateToDoButtonEnabled = false;
+                IsUpdateInformationEnabled = false;
+                OnPropertyChanged(nameof(IsCreateToDoButtonEnabled));
+                OnPropertyChanged(nameof(IsUpdateButtonEnabled));
+                OnPropertyChanged(nameof(IsUpdateInformationEnabled));
+            }
+
             InitToDo(ConcreteTask.ToDoList);
         }
 

@@ -20,10 +20,14 @@
                 <Editor Text="{Binding ConcreteTask.ExecutorEmail}" Placeholder="text me"></Editor>
             </StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Label Text="Reminder"></Label>
+                <Label Text="DeadLine"></Label>
                 <DatePicker Format="D" 
                             Date="{Binding ConcreteTask.DeadLine}"
                             MinimumDate="{Binding MinDate}"/>
+            </StackLayout>
+            <StackLayout>
+                <Label Text="Remind the day before deadline: "/>
+                <Switch IsToggled="{Binding ConcreteTask.NotificationEnabled}"></Switch>
             </StackLayout>
             <Label Text="to do list"></Label>
             <RefreshView>

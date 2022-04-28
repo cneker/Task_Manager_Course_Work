@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using coursework.Models;
-using Task = System.Threading.Tasks.Task;
 
 namespace coursework.Services
 {
@@ -71,7 +67,7 @@ namespace coursework.Services
             return JsonSerializer.Deserialize<Models.Task>(
                 await response.Content.ReadAsStringAsync(), _options);
         }
-        //may be remove return Task value
+        
         public async Task<Models.Task> Delete(int id)
         {
             using HttpClient client = GetClient();

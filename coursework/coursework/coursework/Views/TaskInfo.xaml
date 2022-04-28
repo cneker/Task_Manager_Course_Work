@@ -6,31 +6,42 @@
              x:Class="coursework.Views.TaskInfo">
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" 
+                         IsEnabled="{Binding IsUpdateInformationEnabled}">
                 <Label Text="Name"></Label>
                 <Editor Text="{Binding ConcreteTask.Name}" Placeholder="text me"></Editor>
             </StackLayout>
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" 
+                         IsEnabled="{Binding IsUpdateInformationEnabled}">
                 <Label Text="Description"></Label>
                 <Editor Text="{Binding ConcreteTask.Description}" Placeholder="text me"></Editor>
             </StackLayout>
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" 
+                         IsEnabled="{Binding IsUpdateInformationEnabled}">
                 <Label Text="Executor"></Label>
                 <Editor Text="{Binding ConcreteTask.ExecutorEmail}" Placeholder="text me"></Editor>
             </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Reminder"></Label>
+            <StackLayout Orientation="Horizontal" 
+                         IsEnabled="{Binding IsUpdateInformationEnabled}">
+                <Label Text="DeadLine"></Label>
                 <DatePicker Format="D" 
                             Date="{Binding ConcreteTask.DeadLine}"
                             MinimumDate="{Binding MinDate}"/>
             </StackLayout>
+            <StackLayout Orientation="Horizontal" 
+                         IsEnabled="{Binding IsUpdateInformationEnabled}">
+                <Label Text="Remind the day before deadline: "/>
+                <Switch IsToggled="{Binding ConcreteTask.NotificationEnabled}"></Switch>
+            </StackLayout>
             <Label Text="to do list"></Label>
             <RefreshView>
                 <CollectionView ItemsSource="{Binding ToDo}" 
-                                SelectionMode="None">
+                                SelectionMode="None" 
+                                IsEnabled="{Binding IsUpdateInformationEnabled}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout Orientation="Horizontal">
+                            <StackLayout Orientation="Horizontal"
+                                         IsEnabled="{Binding Source={RelativeSource AncestorType={x:Type local:TaskInfoViewModel}}, Path=IsUpdateInformationEnabled}">
                                 <CheckBox IsChecked="{Binding IsCompleted}"></CheckBox>
                                 <Editor Text="{Binding Name}"></Editor>
                                 <Button 
@@ -45,9 +56,11 @@
 
             <StackLayout Orientation="Horizontal">
                 <Button Text="Cancel" Command="{Binding BackCommand}"></Button>
-                <Button Text="Save" Command="{Binding UpdateTaskCommand}"></Button>
+                <Button Text="Save" Command="{Binding UpdateTaskCommand}" 
+                        IsEnabled="{Binding IsUpdateButtonEnabled}"></Button>
                 <Button Text="Delete Task" Command="{Binding DeleteTaskCommand}"></Button>
-                <Button Text="Add Item" Command="{Binding CreateToDoItemCommand}"></Button>
+                <Button Text="Add Item" Command="{Binding CreateToDoItemCommand}"
+                        IsEnabled="{Binding IsCreateToDoButtonEnabled}"></Button>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using coursework.Models;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using coursework.Models;
 
 namespace coursework.Services
 {
@@ -29,24 +26,10 @@ namespace coursework.Services
             return client;
         }
 
-        public async Task<Models.ToDo> Delete(int id)
+        public async Task<ToDo> Delete(int id)
         {
             using HttpClient client = GetClient();
             var response = await client.DeleteAsync(_url + $"/delete?Id={id}");
-
-            if (response.StatusCode != HttpStatusCode.OK)
-                return null;
-
-            return JsonSerializer.Deserialize<Models.ToDo>(
-                await response.Content.ReadAsStringAsync(), _options);
-        }
-
-        public async Task<Models.ToDo> Add(ToDo toDo)
-        {
-            using HttpClient client = GetClient();
-            var json = JsonSerializer.Serialize(toDo);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(_url + $"/create", content);
 
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;

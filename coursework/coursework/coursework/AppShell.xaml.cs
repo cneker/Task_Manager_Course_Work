@@ -1,6 +1,4 @@
-﻿//using App2.ViewModels;
-//using coursework.Views;
-using coursework.Views;
+﻿using coursework.Views;
 using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
@@ -18,10 +16,14 @@ namespace coursework
             if (true)
                 GoToAsync("//LoginPage");
         }
-
         private async void OnMenuItemClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("//LoginPage");
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
         }
     }
 }

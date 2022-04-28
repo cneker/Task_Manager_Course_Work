@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
+﻿using coursework.Models;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
-using coursework.Models;
-using Xamarin.Forms;
 
 namespace coursework.Services
 {
@@ -56,18 +48,6 @@ namespace coursework.Services
                 new StringContent(
                     JsonSerializer.Serialize(user),
                     Encoding.UTF8, "application/json"));
-
-            if (response.StatusCode != HttpStatusCode.OK)
-                return null;
-
-            return JsonSerializer.Deserialize<User>(
-                await response.Content.ReadAsStringAsync(), _options);
-        }
-
-        public async Task<User> Get(string email)
-        {
-            using HttpClient client = GetClient();
-            var response = await client.GetAsync(_url + "/get?" + $"Email={email}");
 
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;

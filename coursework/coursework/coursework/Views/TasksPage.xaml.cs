@@ -15,7 +15,6 @@ namespace coursework.Views
     public partial class TasksPage : ContentPage
     {
         public TasksViewModel ViewModel;
-        private bool isLoad = false;
         public TasksPage()
         {
             InitializeComponent();
@@ -27,11 +26,5 @@ namespace coursework.Views
             base.OnAppearing();
             ViewModel.OnAppearing();
         }
-
-        //protected override void OnDisappearing()
-        //{
-        //    base.OnDisappearing();
-        //    GC.Collect();
-        //}
     }
 }
