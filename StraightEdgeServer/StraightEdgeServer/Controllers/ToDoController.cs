@@ -1,9 +1,8 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StraightEdgeServer.Models;
-using Task = StraightEdgeServer.Models.Task;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace StraightEdgeServer.Controllers
 {
@@ -11,24 +10,13 @@ namespace StraightEdgeServer.Controllers
     [ApiController]
     public class ToDoController : ControllerBase
     {
-        private ApplicationContext db;
+        private readonly ApplicationContext _db;
+        private readonly ILogger _logger;
 
-        public ToDoController(ApplicationContext context)
+        public ToDoController(ApplicationContext context, ILogger<ToDoController> logger)
         {
-            db = context;
-        }
-
-        //api/todo/create
-        [Route("create")]
-        [HttpPost]
-        public async Task<ActionResult<ToDo>> Post(ToDo todo)
-        {
-            if (todo is null)
-                return BadRequest();
-            await db.ToDoLists.AddAsync(todo);
-            await db.SaveChangesAsync();
-
-            return Ok(todo);
+            _db = context;
+            _logger = logger;
         }
 
         //api/todo/delete
@@ -36,11 +24,16 @@ namespace StraightEdgeServer.Controllers
         [HttpDelete]
         public async Task<ActionResult<ToDo>> Delete(int id)
         {
-            var toDo = await db.ToDoLists.FirstAsync(t => t.Id == id);
+            _logger.LogInformation("Deleting to do item {id}", id);
+            var toDo = await _db.ToDoLists.FirstAsync(t => t.Id == id);
             if (toDo == null)
+            {
+                _logger.LogWarning("Delete({id}) NOT FOUND", id);
                 return NotFound();
-            db.ToDoLists.Remove(toDo);
-            await db.SaveChangesAsync();
+            }
+
+            toDo = _db.ToDoLists.Remove(toDo).Entity;
+            await _db.SaveChangesAsync();
             return Ok(toDo);
         }
     }

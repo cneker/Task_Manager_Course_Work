@@ -23,6 +23,11 @@ namespace StraightEdgeServer
                 .UseUrls("http://0.0.0.0:5000;https://0.0.0.0:5001")
                 .UseKestrel()
                 .UseStartup<Startup>()
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                })
                 .ConfigureServices(services =>
                 {
                     services.AddHostedService<EmailService>();

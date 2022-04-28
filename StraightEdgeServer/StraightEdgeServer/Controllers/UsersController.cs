@@ -1,22 +1,23 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using StraightEdgeServer.Models;
 
 namespace StraightEdgeServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //"authorization"
     public class UsersController : ControllerBase
     {
-        private ApplicationContext db;
+        private readonly ApplicationContext _db;
+        private readonly ILogger _logger;
 
-        public UsersController(ApplicationContext context)
+        public UsersController(ApplicationContext context, ILogger<UsersController> logger)
         {
-            db = context;
+            _db = context;
+            _logger = logger;
         }
 
         //api/users/login
@@ -24,13 +25,20 @@ namespace StraightEdgeServer.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> Log(User user)
         {
+            _logger.LogInformation("Authentificate user");
             if (user is null)
+            {
+                _logger.LogWarning("Log(user) BAD REQUEST");
                 return BadRequest();
-            var match = await db.Users
+            }
+            var match = await _db.Users
                 .Include(u => u.Tasks)
                 .FirstOrDefaultAsync(u => u.Email == user.Email && u.Password == user.Password);
             if (match is null)
+            {
+                _logger.LogWarning($"Log(user) {user.Email} NOT FOUND");
                 return NotFound();
+            }
             return Ok(match);
         }
 
@@ -39,34 +47,26 @@ namespace StraightEdgeServer.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> Reg(User user)
         {
+            _logger.LogInformation("Registrating user");
             if (user is null)
+            {
+                _logger.LogWarning("Reg(user) BAD REQUEST");
                 return BadRequest();
-            var match = await db.Users
+            }
+            var match = await _db.Users
                 .Include(u => u.Tasks)
                 .FirstOrDefaultAsync(u => u.Email == user.Email);
             if (match != null)
+            {
+                _logger.LogWarning("Reg(user) {email} EXISTS", user.Email);
                 return BadRequest();
-            await db.AddAsync(user);
-            await db.SaveChangesAsync();
+            }
+            await _db.AddAsync(user);
+            await _db.SaveChangesAsync();
 
-            match = await db.Users
+                match = await _db.Users
                 .Include(u => u.Tasks)
                 .FirstOrDefaultAsync(u => u.Email == user.Email);
-            return Ok(match);
-        }
-
-        //api/users/get
-        [Route("get")]
-        [HttpGet]
-        public async Task<ActionResult<User>> Get(string email)
-        {
-            if (email == string.Empty)
-                return BadRequest();
-            var match = await db.Users
-                .Include(u => u.Tasks)
-                .FirstOrDefaultAsync(u => u.Email == email);
-            if (match is null)
-                return NotFound();
             return Ok(match);
         }
     }

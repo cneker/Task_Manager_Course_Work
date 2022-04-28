@@ -13,7 +13,6 @@ namespace StraightEdgeServer.Models
         public string Description { get; set; }
         //late make ExecutorId and User object as Executor
         public string ExecutorEmail { get; set; }
-        //late change type to DateAndTime 
         [Column(TypeName = "date")]
         public DateTime DeadLine { get; set; }
         [DefaultValue("null")]

@@ -1,11 +1,10 @@
-﻿using System.Collections;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using StraightEdgeServer.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using StraightEdgeServer.Models;
 using Task = StraightEdgeServer.Models.Task;
 
 namespace StraightEdgeServer.Controllers
@@ -14,11 +13,13 @@ namespace StraightEdgeServer.Controllers
     [ApiController]
     public class TasksController : ControllerBase
     {
-        private ApplicationContext db;
+        private readonly ApplicationContext _db;
+        private readonly ILogger _logger;
 
-        public TasksController(ApplicationContext context)
+        public TasksController(ApplicationContext context, ILogger<TasksController> logger)
         {
-            db = context;
+            _db = context;
+            _logger = logger;
         }
 
         //api/tasks/get
@@ -26,11 +27,15 @@ namespace StraightEdgeServer.Controllers
         [HttpGet]
         public async Task<ActionResult<Task>> Get(int id)
         {
-            var task = await db.Tasks
+            _logger.LogInformation("Getting task {id}", id);
+            var task = await _db.Tasks
                 .Include(t => t.ToDoList)
                 .FirstOrDefaultAsync(t => t.Id == id);
             if (task is null)
+            {
+                _logger.LogWarning("Get{id} NOT FOUND", id);
                 return NotFound();
+            }
             return Ok(task);
         }
 
@@ -39,12 +44,16 @@ namespace StraightEdgeServer.Controllers
         [HttpPost]
         public async Task<ActionResult<Task>> Post(Task task)
         {
+            _logger.LogInformation("Creating task");
             if (task is null)
+            {
+                _logger.LogWarning("Post(task) BAD REQUEST");
                 return BadRequest();
-            await db.Tasks.AddAsync(task);
-            await db.SaveChangesAsync();
+            }
+            await _db.Tasks.AddAsync(task);
+            await _db.SaveChangesAsync();
 
-            task = await db.Tasks.FirstOrDefaultAsync(t => t.Id == task.Id);
+            task = await _db.Tasks.FirstOrDefaultAsync(t => t.Id == task.Id);
 
             return Ok(task);
         }
@@ -54,37 +63,45 @@ namespace StraightEdgeServer.Controllers
         [HttpPut]
         public async Task<ActionResult<Task>> Put(Task task)
         {
+            _logger.LogInformation("Updating task");
             if (task is null)
+            {
+                _logger.LogWarning("Put(task) BAD REQUEST");
                 return BadRequest();
-            //var source = await db.Tasks.Include(t => t.ToDoList).FirstAsync(t => t.Id == task.Id);
+            }
 
-            db.Tasks.Update(task);
-            await db.SaveChangesAsync();
-
+            _db.Tasks.Update(task);
+            await _db.SaveChangesAsync();
 
             return Ok(task);
         }
 
-        //may be remove return Task value
         //api/tasks/delete
         [Route("delete")]
         [HttpDelete]
         public async Task<ActionResult<Task>> Delete(int id)
         {
-            var task = await db.Tasks.FirstOrDefaultAsync(t => t.Id == id);
+            _logger.LogInformation("Deleting task {id}", id);
+            var task = await _db.Tasks.FirstOrDefaultAsync(t => t.Id == id);
             if (task is null)
+            {
+                _logger.LogWarning("Delete({id}) NOT FOUND", id);
                 return NotFound();
-            db.Tasks.Remove(task);
-            await db.SaveChangesAsync();
+            }
+
+            task = _db.Tasks.Remove(task).Entity;
+            await _db.SaveChangesAsync();
             return Ok(task);
         }
 
+        //api/tasks/user_tasks
         [Route("user_tasks")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Task>>> GetTasks(string email)
         {
-            var user = await db.Users.FirstOrDefaultAsync(u => u.Email == email);
-            var tasks = await db.Tasks
+            _logger.LogInformation("Getting user {email} tasks", email);
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
+            var tasks = await _db.Tasks
                 .Include(t => t.ToDoList)
                 .Where(t => t.UserEmail == user.Email || t.ExecutorEmail == user.Email)
                 .ToListAsync();
