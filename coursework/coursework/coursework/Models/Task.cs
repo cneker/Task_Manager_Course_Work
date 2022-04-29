@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
 
 namespace coursework.Models
 {
@@ -22,5 +23,6 @@ namespace coursework.Models
 
         public int CountOfCompletedToDo { get; set; }
         public string TaskOwner { get; set; }
+        public Color BackgroundColor { get; set; }
     }
 }

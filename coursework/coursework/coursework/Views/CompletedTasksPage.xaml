@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:coursework.Models;assembly=coursework"
+             xmlns:local="clr-namespace:coursework.ViewModels;assembly=coursework"
+             x:Class="coursework.Views.CompletedTasksPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddTaskCommand }" />
+    </ContentPage.ToolbarItems>
+    <RefreshView>
+        <CollectionView ItemsSource="{Binding Tasks}" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout BackgroundColor="{Binding Path=BackgroundColor}">
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="{Binding TaskOwner}"
+                                   FontSize="16"/>
+                            <Label Text="{Binding Path = Name, StringFormat = 'Name: {0}'}" 
+                                   LineBreakMode="NoWrap"
+                                   FontSize="16" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding Path = Description, StringFormat='Description: {0}'}" 
+                                   LineBreakMode="TailTruncation"
+                                   MaxLines="2"
+                                   FontSize="16" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding Path = ExecutorEmail, StringFormat='Executor: {0}'}"
+                                   LineBreakMode="NoWrap"
+                                   FontSize="16" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label LineBreakMode="NoWrap" FontSize="16" >
+                                <Label.Text>
+                                    <MultiBinding StringFormat="Completed: {0} / {1}">
+                                        <Binding Path="CountOfCompletedToDo"/>
+                                        <Binding Path ="ToDoList.Count"/>
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                        </StackLayout>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:CompletedTasksViewModel}}, Path=ItemTappedCommand}"
+                                CommandParameter="{Binding Source={RelativeSource AncestorType={x:Type model:Task}}, Path= .}">
+                            </TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>

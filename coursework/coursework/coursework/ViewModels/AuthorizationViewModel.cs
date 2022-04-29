@@ -44,7 +44,7 @@ namespace coursework.ViewModels
             if (user != null)
             {
                 UserSingleton.GetInstance(user);
-                await Shell.Current.GoToAsync($"//{nameof(TasksPage)}");
+                await Shell.Current.GoToAsync($"//Tasks");
             }
         }
 
@@ -54,7 +54,7 @@ namespace coursework.ViewModels
             if (user != null)
             {
                 UserSingleton.GetInstance(user);
-                await Shell.Current.GoToAsync($"//{nameof(TasksPage)}");
+                await Shell.Current.GoToAsync($"//Tasks");
             }
         }
     }

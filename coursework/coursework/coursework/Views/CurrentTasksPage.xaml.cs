@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using coursework.ViewModels;
 using Xamarin.Forms;
@@ -12,13 +10,13 @@ using Xamarin.Forms.Xaml;
 namespace coursework.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class TasksPage : ContentPage
+    public partial class CurrentTasksPage : ContentPage
     {
-        public TasksViewModel ViewModel;
-        public TasksPage()
+        private CurrentTasksViewModel ViewModel;
+        public CurrentTasksPage()
         {
             InitializeComponent();
-            BindingContext = ViewModel = new TasksViewModel();
+            BindingContext = ViewModel = new CurrentTasksViewModel();
         }
 
         protected override void OnAppearing()

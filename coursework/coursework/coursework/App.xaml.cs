@@ -10,12 +10,6 @@ namespace coursework
         public App()
         {
             InitializeComponent();
-            //Routing.RegisterRoute(nameof(ConcreteTask), typeof(ConcreteTask));
-            //Routing.RegisterRoute(nameof(AppShell), typeof(AppShell));
-            ////Routing.RegisterRoute(nameof(ConcreteTask), typeof(ConcreteTask));
-            ////Routing.RegisterRoute(nameof(ConcreteTask), typeof(ConcreteTask));
-            ////Routing.RegisterRoute(nameof(ConcreteTask), typeof(ConcreteTask));
-
             MainPage = new AppShell();
         }
 
@@ -25,6 +19,7 @@ namespace coursework
 
         protected override void OnSleep()
         {
+            base.OnSleep();
         }
 
         protected override void OnResume()

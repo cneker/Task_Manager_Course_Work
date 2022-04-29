@@ -25,8 +25,14 @@
     <Compile Update="AppShell.xaml.cs">
       <DependentUpon>AppShell.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\CompletedTasksPage.xaml.cs">
+      <DependentUpon>CompletedTasksPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\CreateTask.xaml.cs">
       <DependentUpon>CreateTask.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\CurrentTasksPage.xaml.cs">
+      <DependentUpon>CurrentTasksPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -35,6 +41,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\AccountPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\CompletedTasksPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\CreateTask.xaml">
@@ -49,7 +58,7 @@
     <EmbeddedResource Update="Views\TaskInfo.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TasksPage.xaml">
+    <EmbeddedResource Update="Views\CurrentTasksPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

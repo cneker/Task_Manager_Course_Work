@@ -3,12 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:coursework.ViewModels;assembly=coursework"
              xmlns:model="clr-namespace:coursework.Models;assembly=coursework"
-             x:Class="coursework.Views.TasksPage">
-
+             x:Class="coursework.Views.CurrentTasksPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Command="{Binding AddTaskCommand }" />
     </ContentPage.ToolbarItems>
-
     <RefreshView>
         <CollectionView ItemsSource="{Binding Tasks}" SelectionMode="None">
             <CollectionView.ItemTemplate>
@@ -45,7 +43,7 @@
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer
                                 NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksViewModel}}, Path=ItemTappedCommand}"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:CurrentTasksViewModel}}, Path=ItemTappedCommand}"
                                 CommandParameter="{Binding Source={RelativeSource AncestorType={x:Type model:Task}}, Path= .}">
                             </TapGestureRecognizer>
                         </StackLayout.GestureRecognizers>
@@ -54,5 +52,4 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
     </RefreshView>
-
 </ContentPage>

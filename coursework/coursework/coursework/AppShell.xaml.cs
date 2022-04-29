@@ -11,8 +11,11 @@ namespace coursework
         {
             InitializeComponent();
             Routing.RegisterRoute("//LoginPage/RegistrationPage", typeof(RegistrationPage));
-            Routing.RegisterRoute("//TasksPage/CreateTask", typeof(CreateTask));
-            Routing.RegisterRoute($"//TasksPage/{nameof(TaskInfo)}", typeof(TaskInfo));
+            Routing.RegisterRoute("//CurrentTasksPage/CreateTask", typeof(CreateTask));
+            Routing.RegisterRoute("//CompletedTasksPage/CreateTask", typeof(CreateTask));
+            Routing.RegisterRoute($"//CurrentTasksPage/{nameof(TaskInfo)}", typeof(TaskInfo));
+            Routing.RegisterRoute($"//CompletedTasksPage/{nameof(TaskInfo)}", typeof(TaskInfo));
+
             if (true)
                 GoToAsync("//LoginPage");
         }
