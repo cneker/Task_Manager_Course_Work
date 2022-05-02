@@ -13,7 +13,7 @@ namespace coursework.Models
         //late make ExecutorId and User object as Executor
         public string ExecutorEmail { get; set; }
         public DateTime DeadLine { get; set; }
-        public bool? IsCompleted { get; set; }
+        public bool IsCompleted { get; set; }
         public bool NotificationEnabled { get; set; }
 
         public string UserEmail { get; set; }
@@ -23,6 +23,5 @@ namespace coursework.Models
 
         public int CountOfCompletedToDo { get; set; }
         public string TaskOwner { get; set; }
-        public Color BackgroundColor { get; set; }
     }
 }

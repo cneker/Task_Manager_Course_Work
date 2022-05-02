@@ -8,6 +8,7 @@ using coursework.Annotations;
 using coursework.Models;
 using coursework.Services;
 using coursework.Views;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace coursework.ViewModels
@@ -53,6 +54,9 @@ namespace coursework.ViewModels
             var user = await _userService.Log(_currentUser);
             if (user != null)
             {
+                Preferences.Set("Email", user.Email);
+                Preferences.Set("Password", user.Password);
+
                 UserSingleton.GetInstance(user);
                 await Shell.Current.GoToAsync($"//Tasks");
             }

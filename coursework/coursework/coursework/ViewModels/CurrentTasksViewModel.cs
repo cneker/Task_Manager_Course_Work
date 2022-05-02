@@ -63,7 +63,7 @@ namespace coursework.ViewModels
         {
             CurrentUser = UserSingleton.GetInstance().GetUser();
             CurrentUser.Tasks = (await _taskService.GetAllUserTasks(CurrentUser.Email))
-                .Where(t => t.IsCompleted == null).ToList();
+                .Where(t => t.IsCompleted == false).ToList();
             Tasks = LoadTasks();
 
             foreach (var task in Tasks)

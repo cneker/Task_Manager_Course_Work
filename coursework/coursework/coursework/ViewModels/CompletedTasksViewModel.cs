@@ -63,7 +63,7 @@ namespace coursework.ViewModels
         {
             CurrentUser = UserSingleton.GetInstance().GetUser();
             CurrentUser.Tasks = (await _taskService.GetAllUserTasks(CurrentUser.Email))
-                .Where(t => t.IsCompleted != null).ToList();
+                .Where(t => t.IsCompleted == true).ToList();
             Tasks = LoadTasks();
 
             foreach (var task in Tasks)
@@ -76,8 +76,6 @@ namespace coursework.ViewModels
                 }
                 else
                     task.TaskOwner = "Your task";
-                task.BackgroundColor = task.IsCompleted == false ? Color.Red : Color.Green;
-                OnPropertyChanged(nameof(task.BackgroundColor));
             }
         }
         private async void OnItemTapped(Task task) =>

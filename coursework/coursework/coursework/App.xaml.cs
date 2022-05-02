@@ -1,5 +1,9 @@
 ﻿using System;
+using coursework.Models;
+using coursework.Services;
+using coursework.ViewModels;
 using coursework.Views;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,11 +19,22 @@ namespace coursework
 
         protected override void OnStart()
         {
+            var userEmail = Preferences.Get("Email", "");
+            var userPassword = Preferences.Get("Password", "");
+            if (!userEmail.Equals("") && !userPassword.Equals(""))
+            {
+                UserSingleton.GetInstance(new User() { Email = userEmail, Password = userPassword });
+                Shell.Current.GoToAsync("//Tasks");
+            }
+            else
+            {
+                Shell.Current.GoToAsync("//LoginPage");
+            }
         }
 
         protected override void OnSleep()
         {
-            base.OnSleep();
+            
         }
 
         protected override void OnResume()
