@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using StraightEdgeServer.Models;
+using StraightEdgeServer.Services;
 
 namespace StraightEdgeServer
 {
@@ -29,7 +30,9 @@ namespace StraightEdgeServer
 
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
             services.AddControllers();
+
             services.AddHostedService<EmailService>();
+            services.AddHostedService<DeadlineCheckService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using Microsoft.Extensions.Hosting;
@@ -10,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using StraightEdgeServer.Models;
 using Task = System.Threading.Tasks.Task;
 
-namespace StraightEdgeServer
+namespace StraightEdgeServer.Services
 {
     public class EmailService : IHostedService, IDisposable
     {

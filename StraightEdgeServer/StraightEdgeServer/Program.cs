@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
+using StraightEdgeServer.Services;
 
 namespace StraightEdgeServer
 {
@@ -31,6 +32,7 @@ namespace StraightEdgeServer
                 .ConfigureServices(services =>
                 {
                     services.AddHostedService<EmailService>();
+                    services.AddHostedService<DeadlineCheckService>();
                 });
     }
 }

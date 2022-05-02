@@ -15,8 +15,7 @@ namespace StraightEdgeServer.Models
         public string ExecutorEmail { get; set; }
         [Column(TypeName = "date")]
         public DateTime DeadLine { get; set; }
-        [DefaultValue("null")]
-        public bool? IsCompleted { get; set; }
+        public bool IsCompleted { get; set; }
         public bool NotificationEnabled { get; set; }
 
 
