@@ -2,26 +2,67 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="coursework.Views.LoginPage"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False"
+             Shell.PresentationMode="ModalAnimated"
+             BackgroundColor="LightBlue">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="LimeGreen"></Setter>
+                <Setter Property="HorizontalOptions" Value="Start"></Setter>
+                <Setter Property="WidthRequest" Value="150"></Setter>
+            </Style>
+            <Style x:Key="EntryStyle" TargetType="Entry">
+                <Setter Property="HorizontalOptions" Value="Start"></Setter>
+                <Setter Property="WidthRequest" Value="200"></Setter>
+            </Style>
+            <Style x:Key="Lables" TargetType="Label">
+                <Setter Property="FontSize" Value="17"></Setter>
+                <Setter Property="VerticalOptions" Value="Center"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+                <Setter Property="TextColor" Value="Black"></Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <StackLayout>
-                <Label Text="Login"></Label>
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="email"></Label>
-                    <Entry Placeholder="Text tour email" Text="{Binding Path=CurrentUser.Email}"></Entry>
+        <StackLayout Spacing="20"
+                     Margin="0, 100">
+                <Label Text="Login" 
+                       HorizontalOptions="Center"
+                       FontSize="40"
+                       TextColor="Crimson"></Label>
+                <StackLayout Margin="30, 80, 50, 10" 
+                             Orientation="Horizontal">
+                    <StackLayout Orientation="Vertical"
+                                 Spacing="27"
+                                 VerticalOptions="Center">
+                        <Label Text="Email:"
+                               Style="{StaticResource Lables}"></Label>
+                        <Label Text="Password:"
+                               Style="{StaticResource Lables}"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical">
+                        <Entry Placeholder="Text your email"
+                               Keyboard="Email" 
+                               ClearButtonVisibility="WhileEditing"
+                               Text="{Binding Path=CurrentUser.Email}"
+                               Style="{StaticResource EntryStyle}"></Entry>
+                        <Entry Placeholder="Text your password" 
+                               ClearButtonVisibility="WhileEditing"
+                               IsPassword="True" Text="{Binding Path=CurrentUser.Password}"
+                               Style="{StaticResource EntryStyle}"></Entry>
+                    </StackLayout>
                 </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="password"></Label>
-                    <Entry Placeholder="Text tour password" IsPassword="True" Text="{Binding Path=CurrentUser.Password}"></Entry>
+                <StackLayout Orientation="Horizontal" 
+                             HorizontalOptions="Center"
+                             Spacing="25">
+                    <Button Text="Log in" 
+                            Command="{Binding Path = GetUserCommand}"
+                            Style="{StaticResource ButtonStyle}"/>
+                    <Button Text="Registration" 
+                            Command="{Binding Path = GoToRegistrationCommand}"
+                            Style="{StaticResource ButtonStyle}"/>
                 </StackLayout>
-                <Button VerticalOptions="Center" Text="Login" Command="{Binding Path = GetUserCommand}"/>
-                <Button VerticalOptions="Center" Text="Registration"  Clicked="OnRegistrationClicked"/>
             </StackLayout>
-        </Grid>
-        
     </ContentPage.Content>
 </ContentPage>

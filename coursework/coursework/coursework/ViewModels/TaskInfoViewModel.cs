@@ -21,7 +21,6 @@ namespace coursework.ViewModels
         public ICommand UpdateTaskCommand { get; set; }
         public ICommand CreateToDoItemCommand { get; set; }
         public ICommand BackCommand { get; set; }
-        public ICommand DeleteTaskCommand { get; set; }
         public Command<ToDo> DeleteToDoCommand { get; set; }
 
         public DateTime MinDate { get; }
@@ -63,7 +62,6 @@ namespace coursework.ViewModels
             UpdateTaskCommand = new Command(OnUpdatingTask);
             CreateToDoItemCommand = new Command(OnCreatingToDoItem);
             BackCommand = new Command(Back);
-            DeleteTaskCommand = new Command(OnDeletingTask);
             DeleteToDoCommand = new Command<ToDo>(OnDeletingToDoItem);
         }
 
@@ -101,19 +99,6 @@ namespace coursework.ViewModels
 
         private async void Back() =>
             await Shell.Current.GoToAsync("..");
-
-        public async void OnDeletingTask()
-        {
-            var response = await _taskService.Delete(ConcreteTask.Id);
-            if (response != null)
-            {
-                var onDeleting =
-                    UserSingleton.GetInstance().GetUser().Tasks.First(t => t.Id == ConcreteTask.Id);
-                UserSingleton.GetInstance().GetUser().Tasks.Remove(onDeleting);
-                
-                Back();
-            }
-        }
 
         public void ApplyQueryAttributes(IDictionary<string, string> query)
         {

@@ -20,6 +20,8 @@ namespace coursework.ViewModels
         //for refresh items in refreshview (may be put away)
         //public ICommand LoadTasksItemsCommand { get; set; }
         public ICommand AddTaskCommand { get; set; }
+        public Command<int> DeleteTaskCommand { get; set; }
+
         public Command<Task> ItemTappedCommand { get; set; }
 
         public User CurrentUser
@@ -50,6 +52,7 @@ namespace coursework.ViewModels
 
             AddTaskCommand = new Command(OnAddTask);
             ItemTappedCommand = new Command<Task>(OnItemTapped);
+            DeleteTaskCommand = new Command<int>(OnDeletingTask);
             //LoadTasksItemsCommand = new Command(LoadTasks1);
         }
 
@@ -82,5 +85,17 @@ namespace coursework.ViewModels
         private async void OnItemTapped(Task task) =>
             await Shell.Current.GoToAsync($"{nameof(TaskInfo)}?Id={task.Id}");
 
+        public async void OnDeletingTask(int id)
+        {
+            var response = await _taskService.Delete(id);
+            if (response != null)
+            {
+                var onDeleting =
+                    UserSingleton.GetInstance().GetUser().Tasks.First(t => t.Id == id);
+                UserSingleton.GetInstance().GetUser().Tasks.Remove(onDeleting);
+                CurrentUser.Tasks.Remove(onDeleting);
+                Tasks.Remove(onDeleting);
+            }
+        }
     }
 }

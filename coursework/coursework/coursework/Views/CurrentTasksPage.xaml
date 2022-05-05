@@ -3,7 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:coursework.ViewModels;assembly=coursework"
              xmlns:model="clr-namespace:coursework.Models;assembly=coursework"
-             x:Class="coursework.Views.CurrentTasksPage">
+             x:Class="coursework.Views.CurrentTasksPage"
+             Title="Tasks"
+             BackgroundColor="LightBlue">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="Stack" TargetType="StackLayout">
+                <Setter Property="Margin" Value="10, 0, 0, 0"></Setter>
+            </Style>
+            <Style x:Key="Lables" TargetType="Label">
+                <Setter Property="FontSize" Value="17"></Setter>
+                <Setter Property="VerticalOptions" Value="Center"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+                <Setter Property="TextColor" Value="Black"></Setter>
+            </Style>
+        </ResourceDictionary>
+
+    </ContentPage.Resources>
+
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Command="{Binding AddTaskCommand }" />
     </ContentPage.ToolbarItems>
@@ -11,43 +29,70 @@
         <CollectionView ItemsSource="{Binding Tasks}" SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout>
-                        <StackLayout Orientation="Vertical">
-                            <Label Text="{Binding TaskOwner}"
-                                   FontSize="16"/>
-                            <Label Text="{Binding Path = Name, StringFormat = 'Name: {0}'}" 
-                                   LineBreakMode="NoWrap"
-                                   FontSize="16" />
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding Path = Description, StringFormat='Description: {0}'}" 
-                                   LineBreakMode="TailTruncation"
-                                   MaxLines="2"
-                                   FontSize="16" />
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding Path = ExecutorEmail, StringFormat='Executor: {0}'}"
-                                   LineBreakMode="NoWrap"
-                                   FontSize="16" />
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal">
-                            <Label LineBreakMode="NoWrap" FontSize="16" >
-                                <Label.Text>
-                                    <MultiBinding StringFormat="Completed: {0} / {1}">
-                                        <Binding Path="CountOfCompletedToDo"/>
-                                        <Binding Path ="ToDoList.Count"/>
-                                    </MultiBinding>
-                                </Label.Text>
-                            </Label>
-                        </StackLayout>
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer
+                    <SwipeView Margin="0, -11, 0, 0"
+                               BackgroundColor="Azure">
+                        <SwipeView.LeftItems>
+                            <SwipeItem Text="Delete"
+                                       BackgroundColor="LightPink"
+                                       Command="{Binding Source={RelativeSource AncestorType={x:Type local:CurrentTasksViewModel}}, Path=DeleteTaskCommand}"
+                                       CommandParameter="{Binding Id}"></SwipeItem>
+                        </SwipeView.LeftItems>
+                        <StackLayout Margin="0,0, 0, 0"
+                                     BackgroundColor="Azure">
+
+                            <StackLayout Orientation="Vertical"
+                                         Style="{StaticResource Stack}">
+                                <Label Text="{Binding TaskOwner}"
+                                       FontSize="16"
+                                       Style="{StaticResource Lables}"/>
+                                <Label Text="{Binding Path = Name, StringFormat = 'Title: {0}'}" 
+                                       LineBreakMode="NoWrap"
+                                       FontSize="16"
+                                       Style="{StaticResource Lables}"/>
+                                <Label Text="{Binding Path = ExecutorEmail, StringFormat='Executor: {0}'}"
+                                       LineBreakMode="NoWrap"
+                                       FontSize="16"
+                                       Style="{StaticResource Lables}"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Vertical"
+                                         Style="{StaticResource Stack}"
+                                         Spacing="0">
+                                <Label Text="Description:"
+                                       Style="{StaticResource Lables}"></Label>
+                                <Label Text="{Binding Path = Description}" 
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="2"
+                                       FontSize="16"
+                                       TextColor="Black"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal"
+                                         Style="{StaticResource Stack}">
+                                <Label LineBreakMode="NoWrap" 
+                                       FontSize="16"
+                                       Style="{StaticResource Lables}">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="Completed: {0} / {1}">
+                                            <Binding Path="CountOfCompletedToDo"/>
+                                            <Binding Path ="ToDoList.Count"/>
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                            </StackLayout>
+
+                            <BoxView Color="Azure" HeightRequest="5"></BoxView>
+                            <BoxView Color="Gray" HeightRequest="1" Opacity="0.5"></BoxView>
+                            <BoxView Color="Azure" HeightRequest="5"></BoxView>
+
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer
                                 NumberOfTapsRequired="1"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type local:CurrentTasksViewModel}}, Path=ItemTappedCommand}"
                                 CommandParameter="{Binding Source={RelativeSource AncestorType={x:Type model:Task}}, Path= .}">
-                            </TapGestureRecognizer>
-                        </StackLayout.GestureRecognizers>
-                    </StackLayout>
+                                </TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+
+                        </StackLayout>
+                    </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

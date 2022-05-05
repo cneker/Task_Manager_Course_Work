@@ -21,12 +21,16 @@ namespace coursework.ViewModels
 
         public ICommand CreateUserCommand { protected set; get; }
         public ICommand GetUserCommand { protected set; get; }
+        public ICommand GoToRegistrationCommand { protected set; get; }
+        public ICommand BackCommand { protected set; get; }
 
         public AuthorizationViewModel()
         {
             _currentUser = new User();
             CreateUserCommand = new Command(CreateUser);
             GetUserCommand = new Command(GetUser);
+            GoToRegistrationCommand = new Command(GoToRegistration);
+            BackCommand = new Command(Back);
         }
 
         public User CurrentUser
@@ -60,6 +64,16 @@ namespace coursework.ViewModels
                 UserSingleton.GetInstance(user);
                 await Shell.Current.GoToAsync($"//Tasks");
             }
+        }
+
+        public async void GoToRegistration()
+        {
+            await Shell.Current.GoToAsync("//LoginPage/RegistrationPage");
+        }
+
+        public async void Back()
+        {
+            await Shell.Current.GoToAsync("..");
         }
     }
 }

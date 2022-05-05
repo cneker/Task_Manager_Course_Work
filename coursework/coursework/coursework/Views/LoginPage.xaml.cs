@@ -20,10 +20,5 @@ namespace coursework.Views
             InitializeComponent();
             BindingContext = ViewModel = new AuthorizationViewModel();
         }
-
-        private async void OnRegistrationClicked(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("//LoginPage/RegistrationPage");
-        }
     }
 }

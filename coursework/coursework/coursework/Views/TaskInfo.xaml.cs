@@ -16,7 +16,6 @@ namespace coursework.Views
         public TaskInfo()
         {
             InitializeComponent();
-
             BindingContext = ViewModel = new TaskInfoViewModel();
         }
     }

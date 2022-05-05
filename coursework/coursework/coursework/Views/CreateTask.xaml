@@ -5,53 +5,106 @@
              xmlns:model="clr-namespace:coursework.Models;assembly=coursework"
              x:Class="coursework.Views.CreateTask"
              Shell.PresentationMode="ModalAnimated">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="LimeGreen"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+            </Style>
+            <Style x:Key="EntryStyle" TargetType="Entry">
+                <Setter Property="HorizontalOptions" Value="Start"></Setter>
+                <Setter Property="WidthRequest" Value="230"></Setter>
+            </Style>
+            <Style x:Key="EditorStyle" TargetType="Editor">
+                <Setter Property="HorizontalOptions" Value="Start"></Setter>
+                <Setter Property="WidthRequest" Value="310"></Setter>
+            </Style>
+            <Style x:Key="Lables" TargetType="Label">
+                <Setter Property="FontSize" Value="17"></Setter>
+                <Setter Property="VerticalOptions" Value="Center"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+                <Setter Property="TextColor" Value="Black"></Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Name"></Label>
-                <Editor Text="{Binding ConcreteTask.Name}" Placeholder="text me"></Editor>
-            </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Description"></Label>
-                <Editor Text="{Binding ConcreteTask.Description}" Placeholder="text me"></Editor>
-            </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Executor"></Label>
-                <Editor Text="{Binding ConcreteTask.ExecutorEmail}" Placeholder="text me"></Editor>
-            </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="DeadLine"></Label>
-                <DatePicker Format="D" 
-                            Date="{Binding ConcreteTask.DeadLine}"
-                            MinimumDate="{Binding MinDate}"/>
-            </StackLayout>
+        <StackLayout  Margin="10, 10">
             <StackLayout>
-                <Label Text="Remind the day before deadline: "/>
-                <Switch IsToggled="{Binding ConcreteTask.NotificationEnabled}"></Switch>
+                <StackLayout Orientation="Horizontal">
+                    <StackLayout Orientation="Vertical"
+                                 VerticalOptions="Center"
+                                 Spacing="28">
+                        <Label Text="Title:"
+                               Style="{StaticResource Lables}"></Label>
+                        <Label Text="Executor:"
+                               Style="{StaticResource Lables}"></Label>
+                        <Label Text="DeadLine:"
+                               Style="{StaticResource Lables}"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical">
+                        <Entry Text="{Binding ConcreteTask.Name}" 
+                               Placeholder="Kovychki"
+                               Style="{StaticResource EntryStyle}"></Entry>
+                        <Entry Text="{Binding ConcreteTask.ExecutorEmail}" 
+                               Placeholder="noname@noreply.org"
+                               Keyboard="Email"
+                               Style="{StaticResource EntryStyle}"></Entry>
+                        <DatePicker Format="D"
+                                    HorizontalOptions="Start"
+                                    WidthRequest="150"
+                                    Date="{Binding ConcreteTask.DeadLine}"
+                                    MinimumDate="{Binding MinDate}"/>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Description:"
+                           Style="{StaticResource Lables}"></Label>
+                    <Editor Text="{Binding ConcreteTask.Description}" 
+                            Placeholder="Very informative description"
+                            Margin="0, 0, 0, 20"
+                            HeightRequest="90"
+                            Style="{StaticResource EditorStyle}"></Editor>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal"
+                             Spacing="20">
+                    <Label Text="Remind the day before deadline:"
+                           Style="{StaticResource Lables}"/>
+                    <Switch IsToggled="{Binding ConcreteTask.NotificationEnabled}"></Switch>
+                </StackLayout>
+                <Label Text="To do list:"
+                       Style="{StaticResource Lables}"></Label>
             </StackLayout>
-            <Label Text="to do list"></Label>
-            <RefreshView>
-                <CollectionView x:Name="View" ItemsSource="{Binding ToDo}" 
-                                SelectionMode="None">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout Orientation="Horizontal">
-                                <CheckBox IsChecked="{Binding IsCompleted}"></CheckBox>
-                                <Editor Text="{Binding Name}"></Editor>
-                                <Button 
+            <CollectionView x:Name="View" ItemsSource="{Binding ToDo}" 
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding IsCompleted}"></CheckBox>
+                            <Entry Text="{Binding Name}"
+                                   Placeholder="Nyam"
+                                   WidthRequest="180"></Entry>
+                            <Button 
                                     Text="Delete Item" 
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type local:CreateTaskViewModel}}, Path = DeleteToDoCommand}"
                                     CommandParameter="{Binding Source={RelativeSource AncestorType={x:Type model:ToDo}}, Path= . }"></Button>
-                            </StackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </RefreshView>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
-            <StackLayout Orientation="Horizontal">
-                <Button Text="Cancel" Command="{Binding BackCommand}"></Button>
-                <Button Text="Save" Command="{Binding CreateTaskCommand}"></Button>
-                <Button Text="Add Item" Command="{Binding CreateToDoItemCommand}"></Button>
+
+            <StackLayout Orientation="Horizontal"
+                         Spacing="15"
+                         HorizontalOptions="Center">
+                <Button Text="Cancel" 
+                        Command="{Binding BackCommand}"
+                        Style="{StaticResource ButtonStyle}"></Button>
+                <Button Text="Create task" 
+                        Command="{Binding CreateTaskCommand}"
+                        Style="{StaticResource ButtonStyle}"></Button>
+                <Button Text="Add Item" 
+                        Command="{Binding CreateToDoItemCommand}"
+                        Style="{StaticResource ButtonStyle}"></Button>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
