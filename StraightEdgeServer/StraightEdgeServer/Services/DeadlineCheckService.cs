@@ -4,7 +4,6 @@ using System.Threading;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using MimeKit;
 using StraightEdgeServer.Models;
 using Task = System.Threading.Tasks.Task;
 
@@ -47,6 +46,8 @@ namespace StraightEdgeServer.Services
                             db.Tasks.Update(task);
                         }
                     }
+
+                    db.SaveChanges();
                 }
             }
             catch (Exception e)
