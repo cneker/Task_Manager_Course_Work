@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entities.Models
 {
@@ -23,7 +20,7 @@ namespace Entities.Models
         public Guid UserId { get; set; }
         public User User { get; set; }
 
-        public Guid ExecutorId{ get; set; }
+        public Guid ExecutorId { get; set; }
         public User Executor { get; set; }
 
         public List<ToDoItem> ToDoItems { get; set; }
